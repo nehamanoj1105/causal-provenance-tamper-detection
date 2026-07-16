@@ -1,0 +1,28 @@
+# Dataset (downloaded separately, see data/README.md)
+data/raw/
+data/processed/
+*.json
+*.csv
+*.bin
+*.parquet
+!data/samples/*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Model artifacts
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# OS / editor
+.DS_Store
+.vscode/
