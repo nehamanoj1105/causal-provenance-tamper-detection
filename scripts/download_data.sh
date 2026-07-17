@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Downloads DARPA Transparent Computing E3 Theia data into data/raw/
+# Pulls the DARPA Transparent Computing manifest (schema + tools + ground
+# truth + README-E3.md) into data/raw/manifest/.
 #
-# The TC dataset is distributed via a public GitHub repo (manifest + links to
-# hosted files, not the raw data itself in-repo). This script clones the
-# manifest repo; you'll still need to follow the linked download instructions
-# in README-E3.md for the actual data files, since DARPA hosts those
-# separately (not on GitHub directly).
+# This does NOT download the actual .bin event data. That's hosted
+# separately by Five Directions Inc. on Google Drive, not in this git repo.
+# After running this script, open data/raw/manifest/README-E3.md, follow the
+# Google Drive link there, and manually pull the Theia .bin files into
+# data/raw/theia/. See data/README.md for which files to grab.
 
 set -euo pipefail
 
