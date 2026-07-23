@@ -37,6 +37,5 @@ SOTA research focuses heavily on providing verifiable, mathematically certified 
 
 #### 4. LLM-Powered Agentic Forensics
 * **PROVSEEK (2025)**: Moving entirely away from classical supervised training, PROVSEEK introduces a "zero-training" **agentic forensic framework**. It orchestrates specialized, role-focused LLM agents (Investigation, Follow-Up, and Safety agents) to ingest unstructured Cyber Threat Intelligence (CTI) reports, perform Retrieval-Augmented Generation (RAG), and translate natural language intents into postgres-verifiable SQL queries. Supported by an AutoEncoder-based Filtration Engine to suppress high-frequency benign events, it ensures every claimed indicator is grounded in verifiable database evidence, reducing token consumption and mitigating hallucinations.
+ ---
 
----
-📊 **Would you like me to compile a tailored, deep-dive report comparing the computational overhead and detection accuracy of these SOTA models (specifically Slot, PROVSEEK, and MGDA) on the DARPA E3 benchmark datasets?**
