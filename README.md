@@ -1,5 +1,10 @@
 # causal-provenance-tamper-detection
 
+## Reference Papers
+-- https://www.sciencedirect.com/science/article/pii/S1389128625007728
+-- https://arxiv.org/pdf/2508.21323v2
+-- https://www.usenix.org/legacy/event/tapp11/tech/final_files/Meliou.pdf
+
 Graph-based detection of provenance poisoning attacks (event deletion, insertion,
 reordering, and dependency forgery) in system audit logs, using causal
 consistency analysis over provenance graphs.
