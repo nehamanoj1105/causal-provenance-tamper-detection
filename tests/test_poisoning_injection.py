@@ -4,6 +4,8 @@ from src.detection.poisoning_injection import (
     PoisoningType,
     inject_poisoning,
     targeted_deletion,
+    targeted_dependency_forgery,
+    targeted_insertion,
 )
 from src.graph_construction.schema import (
     ProvenanceEdge,
@@ -112,6 +114,137 @@ class TestPoisoningInjection(unittest.TestCase):
         )
 
         result = targeted_deletion(
+            graph,
+            target_node="missing",
+        )
+
+        self.assertEqual(len(result.events), 0)
+        self.assertEqual(len(result.graph.edges), 0)
+    
+    def test_targeted_dependency_forgery_existing_node(self):
+
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+                "B": object(),
+                "C": object(),
+                "D": object(),
+            },
+            edges=[
+                ProvenanceEdge(
+                    edge_id="e1",
+                    source_id="A",
+                    target_id="B",
+                    edge_type="READ",
+                    timestamp=1.0,
+                ),
+                ProvenanceEdge(
+                    edge_id="e2",
+                    source_id="A",
+                    target_id="C",
+                    edge_type="WRITE",
+                    timestamp=2.0,
+                ),
+            ],
+        )
+
+        result = targeted_dependency_forgery(
+            graph,
+            target_node="A",
+            max_edges=2,
+            seed=42,
+        )
+
+        self.assertEqual(len(result.events), 2)
+
+        for event in result.events:
+            self.assertEqual(
+                event.poisoning_type,
+                PoisoningType.DEPENDENCY_FORGERY,
+            )
+
+        forged_edges = {
+            edge.edge_id: edge
+            for edge in result.graph.edges
+        }
+
+        self.assertNotEqual(
+            forged_edges["e1"].source_id,
+            "A",
+        )
+
+        self.assertNotEqual(
+            forged_edges["e2"].source_id,
+            "A",
+        )
+
+
+    def test_targeted_dependency_forgery_unknown_node(self):
+
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+            },
+            edges=[],
+        )
+
+        result = targeted_dependency_forgery(
+            graph,
+            target_node="missing",
+        )
+
+        self.assertEqual(len(result.events), 0)
+        self.assertEqual(len(result.graph.edges), 0)
+        
+    def test_targeted_insertion_existing_node(self):
+
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+                "B": object(),
+                "C": object(),
+            },
+            edges=[
+                ProvenanceEdge(
+                    edge_id="e1",
+                    source_id="A",
+                    target_id="B",
+                    edge_type="READ",
+                    timestamp=1.0,
+                )
+            ],
+        )
+
+        result = targeted_insertion(
+            graph,
+            target_node="A",
+            max_insertions=1,
+            seed=42,
+        )
+
+        self.assertEqual(len(result.events), 1)
+        self.assertEqual(len(result.graph.edges), 2)
+
+        inserted = result.graph.edges[-1]
+
+        self.assertEqual(inserted.source_id, "A")
+        self.assertEqual(inserted.target_id, "C")
+        self.assertEqual(
+            result.events[0].poisoning_type,
+            PoisoningType.INSERTION,
+        )
+
+
+    def test_targeted_insertion_unknown_node(self):
+
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+            },
+            edges=[],
+        )
+
+        result = targeted_insertion(
             graph,
             target_node="missing",
         )
