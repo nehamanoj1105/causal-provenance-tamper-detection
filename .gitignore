@@ -3,6 +3,7 @@ data/raw/
 data/processed/
 *.json
 *.csv
+!results/dataset_statistics.csv
 *.bin
 *.parquet
 !data/samples/*.json
