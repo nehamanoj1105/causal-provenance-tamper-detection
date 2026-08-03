@@ -6,6 +6,7 @@ from src.detection.poisoning_injection import (
     targeted_deletion,
     targeted_dependency_forgery,
     targeted_insertion,
+    targeted_reordering,
 )
 from src.graph_construction.schema import (
     ProvenanceEdge,
@@ -245,6 +246,90 @@ class TestPoisoningInjection(unittest.TestCase):
         )
 
         result = targeted_insertion(
+            graph,
+            target_node="missing",
+        )
+
+        self.assertEqual(len(result.events), 0)
+        self.assertEqual(len(result.graph.edges), 0)
+        
+    def test_targeted_reordering_existing_node(self):
+
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+                "B": object(),
+            },
+            edges=[
+                ProvenanceEdge(
+                    edge_id="e1",
+                    source_id="A",
+                    target_id="B",
+                    edge_type="READ",
+                    timestamp=1.0,
+                ),
+                ProvenanceEdge(
+                    edge_id="e2",
+                    source_id="A",
+                    target_id="B",
+                    edge_type="WRITE",
+                    timestamp=2.0,
+                ),
+                ProvenanceEdge(
+                    edge_id="e3",
+                    source_id="A",
+                    target_id="B",
+                    edge_type="READ",
+                    timestamp=3.0,
+                ),
+            ],
+        )
+
+        result = targeted_reordering(
+            graph,
+            target_node="A",
+            max_swaps=1,
+            seed=42,
+        )
+
+        self.assertEqual(len(result.graph.edges), 3)
+        self.assertEqual(len(result.events), 2)
+
+        original = {
+            "e1": 1.0,
+            "e2": 2.0,
+            "e3": 3.0,
+        }
+
+        updated = {
+            edge.edge_id: edge.timestamp
+            for edge in result.graph.edges
+        }
+
+        changed = sum(
+            original[eid] != updated[eid]
+            for eid in original
+        )
+
+        self.assertEqual(changed, 2)
+
+        for event in result.events:
+            self.assertEqual(
+                event.poisoning_type,
+                PoisoningType.REORDERING,
+            )
+
+
+    def test_targeted_reordering_unknown_node(self):
+
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+            },
+            edges=[],
+        )
+
+        result = targeted_reordering(
             graph,
             target_node="missing",
         )

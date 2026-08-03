@@ -372,3 +372,93 @@ def targeted_insertion(
         graph=poisoned,
         events=events,
     )
+
+def targeted_reordering(
+    graph: ProvenanceGraph,
+    target_node: str,
+    max_swaps: int = 5,
+    seed: int | None = None,
+) -> PoisoningResult:
+    """
+    Reorders timestamps of events involving a target node by swapping the
+    timestamps of neighboring events.
+
+    The graph topology is unchanged.
+    Only timestamps are modified.
+    """
+
+    rng = random.Random(seed)
+
+    poisoned = ProvenanceGraph(
+        nodes=dict(graph.nodes),
+        edges=[copy.deepcopy(e) for e in graph.edges],
+    )
+
+    events: list[PoisoningEvent] = []
+
+    candidate_edges = [
+        edge
+        for edge in poisoned.edges
+        if edge.source_id == target_node
+        or edge.target_id == target_node
+    ]
+
+    if len(candidate_edges) < 2:
+        return PoisoningResult(
+            graph=poisoned,
+            events=[],
+        )
+
+    candidate_edges.sort(key=lambda edge: edge.timestamp)
+
+    swap_count = min(max_swaps, len(candidate_edges) - 1)
+
+    indices = list(range(len(candidate_edges) - 1))
+    rng.shuffle(indices)
+
+    used = 0
+
+    for i in indices:
+
+        if used >= swap_count:
+            break
+
+        edge1 = candidate_edges[i]
+        edge2 = candidate_edges[i + 1]
+
+        ts1 = edge1.timestamp
+        ts2 = edge2.timestamp
+
+        edge1.timestamp = ts2
+        edge2.timestamp = ts1
+
+        events.append(
+            PoisoningEvent(
+                poisoning_type=PoisoningType.REORDERING,
+                edge_id=edge1.edge_id,
+                details={
+                    "target_node": target_node,
+                    "original_timestamp": ts1,
+                    "new_timestamp": edge1.timestamp,
+                },
+            )
+        )
+
+        events.append(
+            PoisoningEvent(
+                poisoning_type=PoisoningType.REORDERING,
+                edge_id=edge2.edge_id,
+                details={
+                    "target_node": target_node,
+                    "original_timestamp": ts2,
+                    "new_timestamp": edge2.timestamp,
+                },
+            )
+        )
+
+        used += 1
+
+    return PoisoningResult(
+        graph=poisoned,
+        events=events,
+    )
