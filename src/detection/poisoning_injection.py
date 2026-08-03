@@ -144,3 +144,65 @@ def inject_poisoning(
         )
 
     return PoisoningResult(graph=poisoned, events=events)
+    
+    
+def targeted_deletion(
+    graph: ProvenanceGraph,
+    target_node: str,
+    max_edges: int = 5,
+    seed: int | None = None,
+) -> PoisoningResult:
+    """
+    Deletes edges incident to a specific target node.
+
+    This models an attacker attempting to hide the activity of a
+    particular process/file/socket instead of randomly corrupting
+    the provenance graph.
+
+    Returns a new PoisoningResult without modifying the input graph.
+    """
+
+    rng = random.Random(seed)
+
+    poisoned = ProvenanceGraph(
+        nodes=dict(graph.nodes),
+        edges=list(graph.edges),
+    )
+
+    events: list[PoisoningEvent] = []
+
+    # Find every edge touching the target node
+    candidate_edges = [
+        edge
+        for edge in poisoned.edges
+        if edge.source_id == target_node
+        or edge.target_id == target_node
+    ]
+
+    if not candidate_edges:
+        return PoisoningResult(
+            graph=poisoned,
+            events=[],
+        )
+
+    rng.shuffle(candidate_edges)
+
+    for edge in candidate_edges[:max_edges]:
+        poisoned.edges.remove(edge)
+
+        events.append(
+            PoisoningEvent(
+                poisoning_type=PoisoningType.DELETION,
+                edge_id=edge.edge_id,
+                details={
+                    "target_node": target_node,
+                    "removed_source": edge.source_id,
+                    "removed_target": edge.target_id,
+                },
+            )
+        )
+
+    return PoisoningResult(
+        graph=poisoned,
+        events=events,
+    )

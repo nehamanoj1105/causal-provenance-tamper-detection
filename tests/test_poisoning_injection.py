@@ -1,6 +1,14 @@
 import unittest
 
-from src.detection.poisoning_injection import PoisoningType, inject_poisoning
+from src.detection.poisoning_injection import (
+    PoisoningType,
+    inject_poisoning,
+    targeted_deletion,
+)
+from src.graph_construction.schema import (
+    ProvenanceEdge,
+    ProvenanceGraph,
+)
 from src.graph_construction.synthetic import generate_synthetic_graph
 
 
@@ -46,6 +54,70 @@ class TestPoisoningInjection(unittest.TestCase):
         labels = result.edge_labels()
         self.assertEqual(len(labels), len(result.events))
 
+    def test_targeted_deletion_existing_node(self):
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+                "B": object(),
+                "C": object(),
+            },
+            edges=[
+                ProvenanceEdge(
+                    edge_id="e1",
+                    source_id="A",
+                    target_id="B",
+                    edge_type="READ",
+                    timestamp=1.0,
+                ),
+                ProvenanceEdge(
+                    edge_id="e2",
+                    source_id="A",
+                    target_id="C",
+                    edge_type="WRITE",
+                    timestamp=2.0,
+                ),
+                ProvenanceEdge(
+                    edge_id="e3",
+                    source_id="B",
+                    target_id="C",
+                    edge_type="READ",
+                    timestamp=3.0,
+                ),
+            ],
+        )
+
+        result = targeted_deletion(
+            graph,
+            target_node="A",
+            max_edges=2,
+            seed=42,
+        )
+
+        self.assertEqual(len(result.events), 2)
+        self.assertEqual(len(result.graph.edges), 1)
+
+        for event in result.events:
+            self.assertEqual(
+                event.poisoning_type,
+                PoisoningType.DELETION,
+            )
+
+
+    def test_targeted_deletion_unknown_node(self):
+        graph = ProvenanceGraph(
+            nodes={
+                "A": object(),
+            },
+            edges=[],
+        )
+
+        result = targeted_deletion(
+            graph,
+            target_node="missing",
+        )
+
+        self.assertEqual(len(result.events), 0)
+        self.assertEqual(len(result.graph.edges), 0)
 
 if __name__ == "__main__":
     unittest.main()
