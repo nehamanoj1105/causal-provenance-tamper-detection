@@ -7,7 +7,7 @@ Avro binary decoding against a real .bin file, since we don't have one yet
 (dataset download is still manual, see data/README.md). Once a real Theia
 .bin file is available, add a test that runs parse_cdm_file() against it and
 compare node/edge counts to a manual spot-check, the exact field names here
-(subjectUuid, predicateObjectUuid, timestampNanos, etc) are inferred from
+(subject, predicateObject, timestampNanos, etc) are inferred from
 schema docs and could be wrong.
 """
 
@@ -71,8 +71,8 @@ class TestEventToEdge(unittest.TestCase):
         datum = {
             "uuid": "evt-1",
             "type": "EVENT_READ",
-            "subjectUuid": "subj-1",
-            "predicateObjectUuid": "obj-1",
+            "subject": "subj-1",
+            "predicateObject": "obj-1",
             "timestampNanos": 1_700_000_000_000_000_000,
             "sequence": 42,
         }
@@ -86,13 +86,13 @@ class TestEventToEdge(unittest.TestCase):
         datum = {
             "uuid": "evt-2",
             "type": "EVENT_MMAP",  # not in our current taxonomy
-            "subjectUuid": "subj-1",
-            "predicateObjectUuid": "obj-1",
+            "subject": "subj-1",
+            "predicateObject": "obj-1",
         }
         self.assertIsNone(_event_to_edge(datum))
 
     def test_missing_endpoints_skipped(self):
-        datum = {"uuid": "evt-3", "type": "EVENT_READ", "subjectUuid": "subj-1"}
+        datum = {"uuid": "evt-3", "type": "EVENT_READ", "subject": "subj-1"}
         self.assertIsNone(_event_to_edge(datum))
 
 
