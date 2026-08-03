@@ -26,3 +26,15 @@ checkpoints/
 # OS / editor
 .DS_Store
 .vscode/
+
+
+
+# Downloaded DARPA archives
+*.tar.gz
+
+# Generated parsed data
+data/parsed/
+
+# Extracted Avro segments
+data/samples/*
+!data/samples/.gitkeep
