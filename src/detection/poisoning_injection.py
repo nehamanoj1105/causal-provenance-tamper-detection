@@ -13,6 +13,7 @@ Four attack types, matching the proposal's Phase 4 scope:
 
 from __future__ import annotations
 
+import copy
 import random
 from dataclasses import dataclass, field
 from enum import Enum
@@ -201,6 +202,171 @@ def targeted_deletion(
                 },
             )
         )
+
+    return PoisoningResult(
+        graph=poisoned,
+        events=events,
+    )
+def targeted_dependency_forgery(
+    graph: ProvenanceGraph,
+    target_node: str,
+    max_edges: int = 5,
+    seed: int | None = None,
+) -> PoisoningResult:
+    """
+    Reassigns the source of edges incident to target_node to another node.
+
+    The edge itself remains.
+    The timestamp remains.
+    The edge type remains.
+
+    Only the causal attribution changes.
+    """
+
+    rng = random.Random(seed)
+
+    poisoned = ProvenanceGraph(
+        nodes=dict(graph.nodes),
+        edges=list(graph.edges),
+    )
+
+    events: list[PoisoningEvent] = []
+
+    # Candidate edges originating from the target
+    candidate_edges = [
+        edge
+        for edge in poisoned.edges
+        if edge.source_id == target_node
+    ]
+
+    if not candidate_edges:
+        return PoisoningResult(
+            graph=poisoned,
+            events=[],
+        )
+
+    rng.shuffle(candidate_edges)
+
+    node_ids = list(poisoned.nodes.keys())
+
+    for edge in candidate_edges[:max_edges]:
+
+        possible_sources = [
+            node
+            for node in node_ids
+            if node != edge.source_id
+            and node != edge.target_id
+        ]
+
+        if not possible_sources:
+            continue
+
+        original_source = edge.source_id
+        forged_source = rng.choice(possible_sources)
+
+        edge.source_id = forged_source
+
+        events.append(
+            PoisoningEvent(
+                poisoning_type=PoisoningType.DEPENDENCY_FORGERY,
+                edge_id=edge.edge_id,
+                details={
+                    "target_node": target_node,
+                    "original_source": original_source,
+                    "forged_source": forged_source,
+                    "target": edge.target_id,
+                },
+            )
+        )
+
+    return PoisoningResult(
+        graph=poisoned,
+        events=events,
+    )
+
+def targeted_insertion(
+    graph: ProvenanceGraph,
+    target_node: str,
+    max_insertions: int = 5,
+    seed: int | None = None,
+) -> PoisoningResult:
+    """
+    Inserts plausible provenance edges originating from target_node.
+
+    Unlike the existing random insertion attack, this attack attempts to
+    create believable activity by connecting the target node to nodes that
+    are not already directly connected.
+    """
+
+    rng = random.Random(seed)
+
+    poisoned = ProvenanceGraph(
+        nodes=dict(graph.nodes),
+        edges=[copy.deepcopy(e) for e in graph.edges],
+    )
+
+    events: list[PoisoningEvent] = []
+
+    if target_node not in poisoned.nodes:
+        return PoisoningResult(
+            graph=poisoned,
+            events=[],
+        )
+
+    node_ids = list(poisoned.nodes.keys())
+
+    existing_pairs = {
+        (edge.source_id, edge.target_id)
+        for edge in poisoned.edges
+    }
+
+    existing_timestamps = [e.timestamp for e in poisoned.edges]
+
+    min_ts = min(existing_timestamps, default=0.0)
+    max_ts = max(existing_timestamps, default=1.0)
+
+    edge_types = list(
+        {
+            edge.edge_type
+            for edge in poisoned.edges
+        }
+    )
+
+    inserted = 0
+
+    for node in node_ids:
+
+        if inserted >= max_insertions:
+            break
+
+        if node == target_node:
+            continue
+
+        if (target_node, node) in existing_pairs:
+            continue
+
+        fake_edge = ProvenanceEdge(
+            edge_id=f"targeted_insert_{inserted}",
+            source_id=target_node,
+            target_id=node,
+            edge_type=rng.choice(edge_types),
+            timestamp=rng.uniform(min_ts, max_ts),
+        )
+
+        poisoned.edges.append(fake_edge)
+
+        events.append(
+            PoisoningEvent(
+                poisoning_type=PoisoningType.INSERTION,
+                edge_id=fake_edge.edge_id,
+                details={
+                    "target_node": target_node,
+                    "target": node,
+                },
+            )
+        )
+
+        inserted += 1
 
     return PoisoningResult(
         graph=poisoned,
