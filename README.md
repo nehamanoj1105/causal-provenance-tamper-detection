@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/30687040/README.md)
 
 # Causal Provenance Tamper Detection
 
