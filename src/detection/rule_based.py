@@ -122,7 +122,24 @@ def check_duplicate_edges(graph: ProvenanceGraph) -> list[ConsistencyViolation]:
 
 
 def run_all_checks(graph: ProvenanceGraph) -> list[ConsistencyViolation]:
+    from .rule_engine import default_rule_engine
+
+    engine = default_rule_engine()
+    results = engine.run(graph)
+
     violations = []
+    for r in results:
+        for v in r.violations:
+            if v.edge_id:
+                violations.append(
+                    ConsistencyViolation(
+                        edge_id=v.edge_id,
+                        rule=v.rule,
+                        detail=v.message,
+                    )
+                )
+
+    # Also run procedural checks
     violations += check_temporal_consistency(graph)
     violations += check_process_lineage(graph)
     violations += check_dangling_edges(graph)
@@ -131,4 +148,5 @@ def run_all_checks(graph: ProvenanceGraph) -> list[ConsistencyViolation]:
 
 
 def flagged_edge_ids(graph: ProvenanceGraph) -> set[str]:
-    return {v.edge_id for v in run_all_checks(graph)}
+    return {v.edge_id for v in run_all_checks(graph) if v.edge_id}
+

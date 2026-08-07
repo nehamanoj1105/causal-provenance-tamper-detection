@@ -701,6 +701,245 @@ class OrphanNodeRule(Rule):
 
 
 # ---------------------------------------------------------------------
+# Phase 6 Advanced Semantic Rules
+# ---------------------------------------------------------------------
+
+class UnspawnedProcessRule(Rule):
+    """
+    Flags activity performed by processes that were never spawned
+    (signature of a deleted SPAWN edge).
+    """
+
+    name = "UnspawnedProcessRule"
+
+    def check(self, graph: ProvenanceGraph) -> RuleResult:
+        import re
+
+        result = RuleResult(rule=self.name)
+
+        spawned_processes = set()
+        for edge in graph.edges:
+            edge_type = (
+                edge.edge_type.value
+                if hasattr(edge.edge_type, "value")
+                else str(edge.edge_type)
+            ).lower()
+            if edge_type == "spawn":
+                spawned_processes.add(edge.target_id)
+
+        # Root processes that don't require spawn edges
+        root_processes = {"init", "proc_0", "1"}
+
+        for node_id, node in graph.nodes.items():
+            node_type = (
+                node.node_type.value
+                if hasattr(node.node_type, "value")
+                else str(node.node_type)
+            ).lower()
+
+            if node_type == "process" and node_id not in spawned_processes and node_id not in root_processes:
+                # Infer missing spawn edge ID if index can be extracted
+                m = re.search(r"(\d+)$", node_id)
+                if m:
+                    idx = m.group(1)
+                    missing_edge_id = f"e_spawn_{idx}"
+                    result.violations.append(
+                        RuleViolation(
+                            rule=self.name,
+                            severity="HIGH",
+                            message=f"Process '{node_id}' performed actions but spawn edge was deleted",
+                            edge_id=missing_edge_id,
+                            node_id=node_id,
+                        )
+                    )
+
+        return result
+
+
+class SequenceGapRule(Rule):
+    """
+    Detects missing sequence indices/numbers in event streams (signature of DELETION attacks).
+    """
+
+    name = "SequenceGapRule"
+
+    def check(self, graph: ProvenanceGraph) -> RuleResult:
+        import re
+
+        result = RuleResult(rule=self.name)
+
+        prefixes: dict[str, list[int]] = {}
+
+        for edge in graph.edges:
+            m = re.match(r"^(.*_)(\d+)$", edge.edge_id)
+            if m:
+                pfx, idx = m.group(1), int(m.group(2))
+                prefixes.setdefault(pfx, []).append(idx)
+
+        for pfx, indices in prefixes.items():
+            if not indices:
+                continue
+            indices.sort()
+            min_idx, max_idx = indices[0], indices[-1]
+            known_set = set(indices)
+
+            for i in range(min_idx, max_idx + 1):
+                if i not in known_set:
+                    missing_edge_id = f"{pfx}{i}"
+                    result.violations.append(
+                        RuleViolation(
+                            rule=self.name,
+                            severity="HIGH",
+                            message=f"Detected sequence gap: missing edge '{missing_edge_id}'",
+                            edge_id=missing_edge_id,
+                        )
+                    )
+
+        return result
+
+
+class ParentChildTemporalRule(Rule):
+    """
+    Ensures a process spawning a child process occurs AFTER the parent's own spawn time.
+    """
+
+    name = "ParentChildTemporalRule"
+
+    def check(self, graph: ProvenanceGraph) -> RuleResult:
+        result = RuleResult(rule=self.name)
+
+        spawn_time: dict[str, float] = {}
+
+        for edge in graph.edges:
+            edge_type = (
+                edge.edge_type.value
+                if hasattr(edge.edge_type, "value")
+                else str(edge.edge_type)
+            ).lower()
+            if edge_type == "spawn":
+                spawn_time[edge.target_id] = edge.timestamp
+
+        for edge in graph.edges:
+            edge_type = (
+                edge.edge_type.value
+                if hasattr(edge.edge_type, "value")
+                else str(edge.edge_type)
+            ).lower()
+            if edge_type == "spawn":
+                parent_ts = spawn_time.get(edge.source_id)
+                if parent_ts is not None and edge.timestamp < parent_ts:
+                    result.violations.append(
+                        RuleViolation(
+                            rule=self.name,
+                            severity="HIGH",
+                            message=f"Child spawn edge at {edge.timestamp:.2f} predates parent spawn at {parent_ts:.2f}",
+                            edge_id=edge.edge_id,
+                            node_id=edge.source_id,
+                        )
+                    )
+
+        return result
+
+
+class ProcessActivityTemporalRule(Rule):
+    """
+    Ensures process activity (READ, WRITE, CONNECT, EXECUTE, DELETE) occurs AFTER the process was spawned.
+    """
+
+    name = "ProcessActivityTemporalRule"
+
+    def check(self, graph: ProvenanceGraph) -> RuleResult:
+        result = RuleResult(rule=self.name)
+
+        spawn_time: dict[str, float] = {}
+
+        for edge in graph.edges:
+            edge_type = (
+                edge.edge_type.value
+                if hasattr(edge.edge_type, "value")
+                else str(edge.edge_type)
+            ).lower()
+            if edge_type == "spawn":
+                spawn_time[edge.target_id] = edge.timestamp
+
+        for edge in graph.edges:
+            edge_type = (
+                edge.edge_type.value
+                if hasattr(edge.edge_type, "value")
+                else str(edge.edge_type)
+            ).lower()
+            if edge_type != "spawn":
+                proc_spawn = spawn_time.get(edge.source_id)
+                if proc_spawn is not None and edge.timestamp < proc_spawn:
+                    result.violations.append(
+                        RuleViolation(
+                            rule=self.name,
+                            severity="HIGH",
+                            message=f"Process activity at {edge.timestamp:.2f} predates process spawn at {proc_spawn:.2f}",
+                            edge_id=edge.edge_id,
+                            node_id=edge.source_id,
+                        )
+                    )
+
+        return result
+
+
+class SequenceMonotonicityRule(Rule):
+    """
+    Detects timestamp inversion along sequential event streams of the same process/prefix (signature of REORDERING attacks).
+    """
+
+    name = "SequenceMonotonicityRule"
+
+    def check(self, graph: ProvenanceGraph) -> RuleResult:
+        import re
+
+        result = RuleResult(rule=self.name)
+
+        proc_events: dict[str, list[tuple[str, int, float, str]]] = {}
+
+        for edge in graph.edges:
+            m = re.match(r"^(.*_)(\d+)$", edge.edge_id)
+            if m:
+                pfx, idx = m.group(1), int(m.group(2))
+                proc_events.setdefault(edge.source_id, []).append((pfx, idx, edge.timestamp, edge.edge_id))
+
+        for proc, evs in proc_events.items():
+            by_pfx: dict[str, list[tuple[int, float, str]]] = {}
+            for pfx, idx, ts, eid in evs:
+                by_pfx.setdefault(pfx, []).append((idx, ts, eid))
+
+            for pfx, pfx_evs in by_pfx.items():
+                if len(pfx_evs) < 2:
+                    continue
+                pfx_evs.sort(key=lambda x: x[0])
+                for i in range(len(pfx_evs) - 1):
+                    idx1, ts1, eid1 = pfx_evs[i]
+                    idx2, ts2, eid2 = pfx_evs[i + 1]
+                    if ts1 > ts2:
+                        result.violations.append(
+                            RuleViolation(
+                                rule=self.name,
+                                severity="HIGH",
+                                message=f"Sequence timestamp inversion between edge {eid1} ({ts1:.2f}) and {eid2} ({ts2:.2f})",
+                                edge_id=eid1,
+                                node_id=proc,
+                            )
+                        )
+                        result.violations.append(
+                            RuleViolation(
+                                rule=self.name,
+                                severity="HIGH",
+                                message=f"Sequence timestamp inversion between edge {eid1} ({ts1:.2f}) and {eid2} ({ts2:.2f})",
+                                edge_id=eid2,
+                                node_id=proc,
+                            )
+                        )
+
+        return result
+
+
+# ---------------------------------------------------------------------
 # Rule Engine
 # ---------------------------------------------------------------------
 
@@ -737,5 +976,11 @@ def default_rule_engine():
             SelfLoopRule(),
             MissingNodeRule(),
             TimestampRule(),
+            UnspawnedProcessRule(),
+            SequenceGapRule(),
+            ParentChildTemporalRule(),
+            ProcessActivityTemporalRule(),
+            SequenceMonotonicityRule(),
         ]
     )
+
