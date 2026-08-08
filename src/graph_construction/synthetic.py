@@ -21,6 +21,7 @@ def generate_synthetic_graph(
     num_processes: int = 20,
     num_files: int = 30,
     num_network: int = 8,
+    target_edges: int | None = None,
     seed: int | None = None,
 ) -> ProvenanceGraph:
     """
@@ -70,8 +71,14 @@ def generate_synthetic_graph(
         net_ids.append(nid)
 
     # Benign file/network activity
-    num_activity_edges = (num_files + num_network) * 3
+    if target_edges is not None:
+        spawn_edges_count = num_processes - 1
+        num_activity_edges = max(1, target_edges - spawn_edges_count)
+    else:
+        num_activity_edges = (num_files + num_network) * 3
+
     for i in range(num_activity_edges):
+
         proc = rng.choice(process_ids)
         t += rng.uniform(0.001, 1.0)
         if rng.random() < 0.7 and file_ids:

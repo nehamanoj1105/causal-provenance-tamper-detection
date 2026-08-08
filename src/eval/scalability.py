@@ -215,15 +215,18 @@ def run_scalability_benchmark(
         # 1. Load / Generate Graph
         t0 = time.time()
         # Scale nodes proportionately (~1 node per 2-4 edges)
-        num_procs = max(10, num_edges // 1000)
-        num_files = max(10, num_edges // 800)
+        num_procs = max(10, num_edges // 20)
+        num_files = max(10, num_edges // 10)
+        num_net = max(5, num_procs // 5)
         graph = generate_synthetic_graph(
             num_processes=num_procs,
             num_files=num_files,
-            num_network=max(5, num_procs // 2),
+            num_network=num_net,
+            target_edges=num_edges,
             seed=seed,
         )
         t_load = time.time() - t0
+
 
         # 2. Inject Poisoning
         t1 = time.time()

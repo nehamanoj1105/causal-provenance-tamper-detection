@@ -1,7 +1,8 @@
 """
-Cross-dataset evaluation module comparing Rule Engine and GraphSAGE models
+Multi-scenario evaluation module comparing Rule Engine and GraphSAGE models
 across all available DARPA provenance datasets.
 """
+
 
 from __future__ import annotations
 

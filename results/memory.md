@@ -2,17 +2,17 @@
 
 | Graph Size (Edges) | Nodes | Detector | RSS Memory (MB) | Peak Memory (MB) | Python Alloc (MB) |
 |---|---|---|---|---|---|
-| 60 | 27 | Rule Engine | 410.83 | 0.04 | 0.00 |
-| 60 | 27 | GraphSAGE Inference | 421.61 | 8.79 | 0.00 |
-| 153 | 68 | Rule Engine | 421.61 | 0.06 | 0.00 |
-| 153 | 68 | GraphSAGE Inference | 422.00 | 0.37 | 0.00 |
-| 310 | 137 | Rule Engine | 422.01 | 0.11 | 0.00 |
-| 310 | 137 | GraphSAGE Inference | 422.71 | 0.68 | 0.00 |
-| 624 | 275 | Rule Engine | 422.86 | 0.17 | 0.00 |
-| 624 | 275 | GraphSAGE Inference | 424.31 | 1.35 | 0.00 |
-| 1,560 | 687 | Rule Engine | 424.82 | 0.41 | 0.00 |
-| 1,560 | 687 | GraphSAGE Inference | 427.90 | 2.79 | 0.00 |
-| 3,124 | 1,375 | Rule Engine | 428.67 | 0.58 | 0.00 |
-| 3,124 | 1,375 | GraphSAGE Inference | 432.69 | 3.45 | 0.00 |
-| 6,249 | 2,750 | Rule Engine | 434.05 | 1.24 | 0.00 |
-| 6,249 | 2,750 | GraphSAGE Inference | 441.29 | 6.11 | 0.00 |
+| 10,000 | 1,600 | Rule Engine | 412.61 | 5.10 | 0.00 |
+| 10,000 | 1,600 | GraphSAGE Inference | 432.83 | 17.32 | 0.00 |
+| 25,000 | 4,000 | Rule Engine | 439.60 | 4.26 | 0.00 |
+| 25,000 | 4,000 | GraphSAGE Inference | 460.50 | 17.91 | 0.00 |
+| 50,000 | 8,000 | Rule Engine | 460.68 | 16.62 | 0.00 |
+| 50,000 | 8,000 | GraphSAGE Inference | 502.27 | 35.69 | 0.00 |
+| 100,000 | 16,000 | Rule Engine | 522.02 | 16.63 | 0.00 |
+| 100,000 | 16,000 | GraphSAGE Inference | 532.64 | 28.77 | 0.00 |
+| 250,000 | 40,000 | Rule Engine | 640.47 | 112.12 | 0.00 |
+| 250,000 | 40,000 | GraphSAGE Inference | 681.61 | 57.92 | 0.00 |
+| 500,000 | 80,000 | Rule Engine | 725.75 | 91.60 | 0.00 |
+| 500,000 | 80,000 | GraphSAGE Inference | 817.28 | 115.82 | 0.00 |
+| 1,000,000 | 160,000 | Rule Engine | 1216.91 | 361.57 | 0.00 |
+| 1,000,000 | 160,000 | GraphSAGE Inference | 1274.00 | 231.64 | 0.00 |

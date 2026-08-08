@@ -1,6 +1,17 @@
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+# Ensure root directory is on Python path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 from src.graph_construction.graph_loader import load_graph
 from src.graph_construction.converter import dataframe_to_schema
 from src.detection.rule_engine import default_rule_engine
+
 
 DATASET = "1r"
 

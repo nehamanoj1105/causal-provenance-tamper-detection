@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Runs Phase 8 Cross-Dataset Evaluation across all available DARPA provenance datasets.
+Runs Multi-Scenario Evaluation across all available DARPA TC E3 provenance datasets.
 
 Executes both Rule Engine and GraphSAGE models on each dataset, measuring:
 - Precision, Recall, F1 Score, Accuracy
@@ -35,7 +35,8 @@ from src.graph_construction.graph_loader import available_datasets
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Phase 8 Cross-Dataset Provenance Tamper Detection Evaluation")
+    parser = argparse.ArgumentParser(description="Multi-Scenario Evaluation across DARPA TC E3 Datasets")
+
     parser.add_argument("--epochs", type=int, default=15, help="Number of GraphSAGE training epochs per dataset")
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
     parser.add_argument("--max-edges", type=int, default=50000, help="Maximum edges per dataset for fast evaluation (0 for full dataset)")
