@@ -1,0 +1,647 @@
+{
+  "seed": 21,
+  "provenance": "audit_corrected",
+  "clean_nodes": 80,
+  "clean_edges": 179,
+  "poisoned_edges": 179,
+  "integrity_problems": [],
+  "ground_truth_positives": 20,
+  "detectable_positives": 15,
+  "events": [
+    {
+      "attack_id": "d1",
+      "attack_type": "deletion",
+      "source_edge_or_entity": "e_activity_68",
+      "original_state": {
+        "edge_id": "e_activity_68",
+        "source_id": "proc_8",
+        "target_id": "file_0",
+        "edge_type": "read",
+        "timestamp": 1700000064.890781
+      },
+      "modified_state": {},
+      "expected_detection_target": "e_activity_68",
+      "effective": true,
+      "detectable": false,
+      "reason": "edge absent from final graph; no id-based match possible"
+    },
+    {
+      "attack_id": "d2",
+      "attack_type": "deletion",
+      "source_edge_or_entity": "e_activity_110",
+      "original_state": {
+        "edge_id": "e_activity_110",
+        "source_id": "proc_23",
+        "target_id": "net_7",
+        "edge_type": "connect",
+        "timestamp": 1700000085.308171
+      },
+      "modified_state": {},
+      "expected_detection_target": "e_activity_110",
+      "effective": true,
+      "detectable": false,
+      "reason": "edge absent from final graph; no id-based match possible"
+    },
+    {
+      "attack_id": "d3",
+      "attack_type": "deletion",
+      "source_edge_or_entity": "e_activity_70",
+      "original_state": {
+        "edge_id": "e_activity_70",
+        "source_id": "proc_8",
+        "target_id": "file_37",
+        "edge_type": "write",
+        "timestamp": 1700000065.3123631
+      },
+      "modified_state": {},
+      "expected_detection_target": "e_activity_70",
+      "effective": true,
+      "detectable": false,
+      "reason": "edge absent from final graph; no id-based match possible"
+    },
+    {
+      "attack_id": "d4",
+      "attack_type": "deletion",
+      "source_edge_or_entity": "e_activity_101",
+      "original_state": {
+        "edge_id": "e_activity_101",
+        "source_id": "proc_27",
+        "target_id": "file_16",
+        "edge_type": "write",
+        "timestamp": 1700000081.1598575
+      },
+      "modified_state": {},
+      "expected_detection_target": "e_activity_101",
+      "effective": true,
+      "detectable": false,
+      "reason": "edge absent from final graph; no id-based match possible"
+    },
+    {
+      "attack_id": "d5",
+      "attack_type": "deletion",
+      "source_edge_or_entity": "e_spawn_8",
+      "original_state": {
+        "edge_id": "e_spawn_8",
+        "source_id": "proc_6",
+        "target_id": "proc_8",
+        "edge_type": "spawn",
+        "timestamp": 1700000006.462229
+      },
+      "modified_state": {},
+      "expected_detection_target": "e_spawn_8",
+      "effective": true,
+      "detectable": false,
+      "reason": "edge absent from final graph; no id-based match possible"
+    },
+    {
+      "attack_id": "i6",
+      "attack_type": "insertion",
+      "source_edge_or_entity": "e_activity_125",
+      "original_state": {},
+      "modified_state": {
+        "edge_id": "poisonv2_insert_0",
+        "source_id": "file_23",
+        "target_id": "proc_8",
+        "edge_type": "write",
+        "timestamp": 1700000014.7763295
+      },
+      "expected_detection_target": "poisonv2_insert_0",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "i7",
+      "attack_type": "insertion",
+      "source_edge_or_entity": "e_spawn_26",
+      "original_state": {},
+      "modified_state": {
+        "edge_id": "poisonv2_insert_1",
+        "source_id": "file_1",
+        "target_id": "proc_12",
+        "edge_type": "spawn",
+        "timestamp": 1700000067.8063657
+      },
+      "expected_detection_target": "poisonv2_insert_1",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "i8",
+      "attack_type": "insertion",
+      "source_edge_or_entity": "e_activity_8",
+      "original_state": {},
+      "modified_state": {
+        "edge_id": "poisonv2_insert_2",
+        "source_id": "proc_9",
+        "target_id": "proc_8",
+        "edge_type": "write",
+        "timestamp": 1700000032.566589
+      },
+      "expected_detection_target": "poisonv2_insert_2",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "i9",
+      "attack_type": "insertion",
+      "source_edge_or_entity": "e_activity_55",
+      "original_state": {},
+      "modified_state": {
+        "edge_id": "poisonv2_insert_3",
+        "source_id": "file_39",
+        "target_id": "file_33",
+        "edge_type": "write",
+        "timestamp": 1700000018.1721215
+      },
+      "expected_detection_target": "poisonv2_insert_3",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "i10",
+      "attack_type": "insertion",
+      "source_edge_or_entity": "e_activity_19",
+      "original_state": {},
+      "modified_state": {
+        "edge_id": "poisonv2_insert_4",
+        "source_id": "file_38",
+        "target_id": "proc_25",
+        "edge_type": "write",
+        "timestamp": 1700000075.0209503
+      },
+      "expected_detection_target": "poisonv2_insert_4",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "r11",
+      "attack_type": "reordering",
+      "source_edge_or_entity": "e_activity_148",
+      "original_state": {
+        "timestamp": 1700000104.8038075
+      },
+      "modified_state": {
+        "timestamp": 1700000073.83408
+      },
+      "expected_detection_target": "e_activity_148",
+      "effective": true,
+      "detectable": true,
+      "reason": "relative order with a neighbour changed"
+    },
+    {
+      "attack_id": "r12",
+      "attack_type": "reordering",
+      "source_edge_or_entity": "e_activity_71",
+      "original_state": {
+        "timestamp": 1700000065.9934394
+      },
+      "modified_state": {
+        "timestamp": 1700000053.0507572
+      },
+      "expected_detection_target": "e_activity_71",
+      "effective": true,
+      "detectable": true,
+      "reason": "relative order with a neighbour changed"
+    },
+    {
+      "attack_id": "r13",
+      "attack_type": "reordering",
+      "source_edge_or_entity": "e_spawn_28",
+      "original_state": {
+        "timestamp": 1700000027.1460783
+      },
+      "modified_state": {
+        "timestamp": 1699999977.445548
+      },
+      "expected_detection_target": "e_spawn_28",
+      "effective": true,
+      "detectable": true,
+      "reason": "relative order with a neighbour changed"
+    },
+    {
+      "attack_id": "r14",
+      "attack_type": "reordering",
+      "source_edge_or_entity": "e_activity_8",
+      "original_state": {
+        "timestamp": 1700000035.2185524
+      },
+      "modified_state": {
+        "timestamp": 1700000001.838851
+      },
+      "expected_detection_target": "e_activity_8",
+      "effective": true,
+      "detectable": true,
+      "reason": "relative order with a neighbour changed"
+    },
+    {
+      "attack_id": "r15",
+      "attack_type": "reordering",
+      "source_edge_or_entity": "e_activity_60",
+      "original_state": {
+        "timestamp": 1700000060.9662404
+      },
+      "modified_state": {
+        "timestamp": 1700000095.0458317
+      },
+      "expected_detection_target": "e_activity_60",
+      "effective": true,
+      "detectable": true,
+      "reason": "relative order with a neighbour changed"
+    },
+    {
+      "attack_id": "f16",
+      "attack_type": "dependency_forgery",
+      "source_edge_or_entity": "e_activity_116",
+      "original_state": {
+        "source_id": "proc_15"
+      },
+      "modified_state": {
+        "source_id": "net_7"
+      },
+      "expected_detection_target": "e_activity_116",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "f17",
+      "attack_type": "dependency_forgery",
+      "source_edge_or_entity": "e_activity_24",
+      "original_state": {
+        "source_id": "proc_20"
+      },
+      "modified_state": {
+        "source_id": "file_15"
+      },
+      "expected_detection_target": "e_activity_24",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "f18",
+      "attack_type": "dependency_forgery",
+      "source_edge_or_entity": "e_activity_83",
+      "original_state": {
+        "source_id": "proc_29"
+      },
+      "modified_state": {
+        "source_id": "file_10"
+      },
+      "expected_detection_target": "e_activity_83",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "f19",
+      "attack_type": "dependency_forgery",
+      "source_edge_or_entity": "e_spawn_11",
+      "original_state": {
+        "source_id": "proc_6"
+      },
+      "modified_state": {
+        "source_id": "file_24"
+      },
+      "expected_detection_target": "e_spawn_11",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    },
+    {
+      "attack_id": "f20",
+      "attack_type": "dependency_forgery",
+      "source_edge_or_entity": "e_activity_40",
+      "original_state": {
+        "source_id": "proc_28"
+      },
+      "modified_state": {
+        "source_id": "file_10"
+      },
+      "expected_detection_target": "e_activity_40",
+      "effective": true,
+      "detectable": true,
+      "reason": ""
+    }
+  ],
+  "rule_engine": {
+    "tp": 15,
+    "fp": 8,
+    "tn": 156,
+    "fn": 0,
+    "precision": 0.6521739130434783,
+    "recall": 1.0,
+    "f1": 0.7894736842105263,
+    "accuracy": 0.9553072625698324,
+    "balanced_accuracy": 0.975609756097561,
+    "mcc": 0.7876297045132321,
+    "fpr": 0.04878048780487805,
+    "fnr": 0.0,
+    "specificity": 0.9512195121951219,
+    "roc_auc": 0.9804878048780488,
+    "pr_auc": 0.7217391304347827,
+    "avg_precision": 0.7217391304347827,
+    "per_rule_counts": {
+      "DuplicateEdgeRule": 0,
+      "DuplicateEventRule": 0,
+      "SpawnConsistencyRule": 2,
+      "ExecutionConsistencyRule": 0,
+      "ReadWriteConsistencyRule": 10,
+      "NetworkConsistencyRule": 0,
+      "DeleteConsistencyRule": 0,
+      "SelfLoopRule": 0,
+      "MissingNodeRule": 0,
+      "TimestampRule": 0,
+      "UnspawnedProcessRule": 1,
+      "SequenceGapRule": 5,
+      "ParentChildTemporalRule": 2,
+      "ProcessActivityTemporalRule": 4,
+      "SequenceMonotonicityRule": 8
+    },
+    "per_type": {
+      "deletion": {
+        "n_gt": 5,
+        "tp": 0,
+        "fp": 23,
+        "tn": 156,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.8715083798882681,
+        "balanced_accuracy": 0.43575418994413406,
+        "mcc": 0.0,
+        "fpr": 0.12849162011173185,
+        "fnr": 0.0,
+        "specificity": 0.8715083798882681,
+        "roc_auc": null,
+        "pr_auc": null,
+        "avg_precision": null
+      },
+      "insertion": {
+        "n_gt": 5,
+        "tp": 5,
+        "fp": 18,
+        "tn": 156,
+        "fn": 0,
+        "precision": 0.21739130434782608,
+        "recall": 1.0,
+        "f1": 0.3571428571428571,
+        "accuracy": 0.8994413407821229,
+        "balanced_accuracy": 0.9482758620689655,
+        "mcc": 0.4414776876872003,
+        "fpr": 0.10344827586206896,
+        "fnr": 0.0,
+        "specificity": 0.896551724137931,
+        "roc_auc": 0.9660919540229885,
+        "pr_auc": 0.3971014492753623,
+        "avg_precision": 0.3971014492753623
+      },
+      "reordering": {
+        "n_gt": 5,
+        "tp": 5,
+        "fp": 18,
+        "tn": 156,
+        "fn": 0,
+        "precision": 0.21739130434782608,
+        "recall": 1.0,
+        "f1": 0.3571428571428571,
+        "accuracy": 0.8994413407821229,
+        "balanced_accuracy": 0.9482758620689655,
+        "mcc": 0.4414776876872003,
+        "fpr": 0.10344827586206896,
+        "fnr": 0.0,
+        "specificity": 0.896551724137931,
+        "roc_auc": 0.9528735632183908,
+        "pr_auc": 0.24057971014492752,
+        "avg_precision": 0.24057971014492752
+      },
+      "dependency_forgery": {
+        "n_gt": 5,
+        "tp": 5,
+        "fp": 18,
+        "tn": 156,
+        "fn": 0,
+        "precision": 0.21739130434782608,
+        "recall": 1.0,
+        "f1": 0.3571428571428571,
+        "accuracy": 0.8994413407821229,
+        "balanced_accuracy": 0.9482758620689655,
+        "mcc": 0.4414776876872003,
+        "fpr": 0.10344827586206896,
+        "fnr": 0.0,
+        "specificity": 0.896551724137931,
+        "roc_auc": 0.9396551724137931,
+        "pr_auc": 0.21739130434782608,
+        "avg_precision": 0.21739130434782608
+      }
+    }
+  },
+  "rule_engine_clean_fp": {
+    "flagged_edges": 0,
+    "fpr": 0.0,
+    "precision_undefined": true
+  },
+  "graphsage": {
+    "tp": 2,
+    "fp": 5,
+    "tn": 29,
+    "fn": 1,
+    "precision": 0.2857142857142857,
+    "recall": 0.6666666666666666,
+    "f1": 0.4,
+    "accuracy": 0.8378378378378378,
+    "balanced_accuracy": 0.7598039215686274,
+    "mcc": 0.362131360580098,
+    "fpr": 0.14705882352941177,
+    "fnr": 0.3333333333333333,
+    "specificity": 0.8529411764705882,
+    "roc_auc": 0.9411764705882353,
+    "pr_auc": 0.7777777777777777,
+    "avg_precision": 0.7777777777777777,
+    "best_threshold": 0.6500000000000001,
+    "n_train": 107,
+    "n_val": 35,
+    "n_test": 37
+  },
+  "mimicry": {
+    "none": {
+      "base_edges": 179,
+      "noise_edges": 0,
+      "final_edges": 179,
+      "noise_self_violations": {},
+      "rule_engine": {
+        "tp": 15,
+        "fp": 8,
+        "tn": 156,
+        "fn": 0,
+        "precision": 0.6521739130434783,
+        "recall": 1.0,
+        "f1": 0.7894736842105263,
+        "accuracy": 0.9553072625698324,
+        "balanced_accuracy": 0.975609756097561,
+        "mcc": 0.7876297045132321,
+        "fpr": 0.04878048780487805,
+        "fnr": 0.0,
+        "specificity": 0.9512195121951219,
+        "roc_auc": 0.9804878048780488,
+        "pr_auc": 0.7217391304347827,
+        "avg_precision": 0.7217391304347827
+      },
+      "graphsage": {
+        "tp": 2,
+        "fp": 5,
+        "tn": 29,
+        "fn": 1,
+        "precision": 0.2857142857142857,
+        "recall": 0.6666666666666666,
+        "f1": 0.4,
+        "accuracy": 0.8378378378378378,
+        "balanced_accuracy": 0.7598039215686274,
+        "mcc": 0.362131360580098,
+        "fpr": 0.14705882352941177,
+        "fnr": 0.3333333333333333,
+        "specificity": 0.8529411764705882,
+        "roc_auc": 0.9411764705882353,
+        "pr_auc": 0.7777777777777777,
+        "avg_precision": 0.7777777777777777,
+        "best_threshold": 0.6500000000000001
+      }
+    },
+    "light": {
+      "base_edges": 179,
+      "noise_edges": 45,
+      "final_edges": 224,
+      "noise_self_violations": {},
+      "rule_engine": {
+        "tp": 15,
+        "fp": 8,
+        "tn": 201,
+        "fn": 0,
+        "precision": 0.6521739130434783,
+        "recall": 1.0,
+        "f1": 0.7894736842105263,
+        "accuracy": 0.9642857142857143,
+        "balanced_accuracy": 0.9808612440191388,
+        "mcc": 0.7919661093038219,
+        "fpr": 0.03827751196172249,
+        "fnr": 0.0,
+        "specificity": 0.9617224880382775,
+        "roc_auc": 0.9846889952153111,
+        "pr_auc": 0.7217391304347827,
+        "avg_precision": 0.7217391304347827
+      },
+      "graphsage": {
+        "tp": 1,
+        "fp": 5,
+        "tn": 39,
+        "fn": 1,
+        "precision": 0.16666666666666666,
+        "recall": 0.5,
+        "f1": 0.25,
+        "accuracy": 0.8695652173913043,
+        "balanced_accuracy": 0.6931818181818181,
+        "mcc": 0.23395480008935163,
+        "fpr": 0.11363636363636363,
+        "fnr": 0.5,
+        "specificity": 0.8863636363636364,
+        "roc_auc": 0.8295454545454546,
+        "pr_auc": 0.23333333333333334,
+        "avg_precision": 0.23333333333333334,
+        "best_threshold": 0.35000000000000003
+      }
+    },
+    "medium": {
+      "base_edges": 179,
+      "noise_edges": 90,
+      "final_edges": 269,
+      "noise_self_violations": {},
+      "rule_engine": {
+        "tp": 15,
+        "fp": 8,
+        "tn": 246,
+        "fn": 0,
+        "precision": 0.6521739130434783,
+        "recall": 1.0,
+        "f1": 0.7894736842105263,
+        "accuracy": 0.9702602230483272,
+        "balanced_accuracy": 0.984251968503937,
+        "mcc": 0.7947534223873715,
+        "fpr": 0.031496062992125984,
+        "fnr": 0.0,
+        "specificity": 0.968503937007874,
+        "roc_auc": 0.9874015748031497,
+        "pr_auc": 0.7217391304347827,
+        "avg_precision": 0.7217391304347827
+      },
+      "graphsage": {
+        "tp": 0,
+        "fp": 1,
+        "tn": 53,
+        "fn": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.9636363636363636,
+        "balanced_accuracy": 0.49074074074074076,
+        "mcc": -0.018518518518518517,
+        "fpr": 0.018518518518518517,
+        "fnr": 1.0,
+        "specificity": 0.9814814814814815,
+        "roc_auc": 0.9074074074074074,
+        "pr_auc": 0.16666666666666666,
+        "avg_precision": 0.16666666666666666,
+        "best_threshold": 0.45
+      }
+    },
+    "heavy": {
+      "base_edges": 179,
+      "noise_edges": 179,
+      "final_edges": 358,
+      "noise_self_violations": {},
+      "rule_engine": {
+        "tp": 15,
+        "fp": 8,
+        "tn": 335,
+        "fn": 0,
+        "precision": 0.6521739130434783,
+        "recall": 1.0,
+        "f1": 0.7894736842105263,
+        "accuracy": 0.9776536312849162,
+        "balanced_accuracy": 0.9883381924198251,
+        "mcc": 0.7980995299322213,
+        "fpr": 0.023323615160349854,
+        "fnr": 0.0,
+        "specificity": 0.9766763848396501,
+        "roc_auc": 0.99067055393586,
+        "pr_auc": 0.7217391304347827,
+        "avg_precision": 0.7217391304347827
+      },
+      "graphsage": {
+        "tp": 0,
+        "fp": 2,
+        "tn": 71,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.9726027397260274,
+        "balanced_accuracy": 0.4863013698630137,
+        "mcc": 0.0,
+        "fpr": 0.0273972602739726,
+        "fnr": 0.0,
+        "specificity": 0.9726027397260274,
+        "roc_auc": null,
+        "pr_auc": null,
+        "avg_precision": null,
+        "best_threshold": 0.7500000000000001
+      }
+    }
+  },
+  "runtime_sec": 0.7328526973724365
+}

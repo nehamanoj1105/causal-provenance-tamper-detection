@@ -1,0 +1,40 @@
+/home/openhands/.local/lib/python3.13/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+[*] PyTorch Device: cpu
+[*] Generating synthetic provenance graph (seed=42)...
+    Graph loaded: 80 nodes, 179 edges.
+[*] Injecting poisoning attack (intensity=5, seed=42)...
+    Poisoned graph ready: 20 poisoning events injected.
+[*] Converting ProvenanceGraph to PyTorch Geometric Data object...
+    PyG Data ready: x=[80, 7], edge_index=[2, 179].
+[*] Training GraphSAGE model for 30 epochs...
+[*] Performing threshold sweep across 0.05 to 1.00...
+[*] Generating evaluation reports and plots under 'results/'...
+
+=================================================================
+GRAPHSAGE ENHANCED EVALUATION RESULTS
+=================================================================
+  Optimal Threshold   : 0.70
+  Precision           : 0.7000
+  Recall              : 0.4667
+  F1 Score            : 0.5600
+  Accuracy            : 0.9385
+  ROC-AUC             : 0.8776
+  PR-AUC              : 0.5634
+  MCC                 : 0.5410
+  False Positive Rate : 0.0183
+  Specificity         : 0.9817
+  Prob Min / Max      : 0.0013 / 0.9843
+  Prob Mean / Median  : 0.2979 / 0.2614
+  Total Runtime       : 1.4582s
+=================================================================
+
+GENERATED ARTIFACTS:
+  [PR CURVE]   results/precision_recall_curve.png
+  [ROC CURVE]  results/roc_curve.png
+  [HISTOGRAM]  results/prediction_histogram.png
+  [METRICS]    results/threshold_metrics.csv
+  [REPORT]     results/threshold_metrics.md
+  [DIAGNOSIS]  results/graphsage_diagnostics.md
+
+[+] GraphSAGE baseline training, calibration, and evaluation completed.

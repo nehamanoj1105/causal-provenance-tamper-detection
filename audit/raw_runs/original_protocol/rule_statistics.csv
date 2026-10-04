@@ -1,0 +1,16 @@
+Rule,Category,Violations,TP,FP,FN,Precision,Recall
+DuplicateEdgeRule,Structural,0,0,0,20,0.0,0.0
+DuplicateEventRule,Structural,0,0,0,20,0.0,0.0
+SelfLoopRule,Structural,0,0,0,20,0.0,0.0
+MissingNodeRule,Structural,0,0,0,20,0.0,0.0
+UnspawnedProcessRule,Structural,2,2,0,18,1.0,0.1
+SequenceGapRule,Structural,5,5,0,15,1.0,0.25
+TimestampRule,Temporal,0,0,0,20,0.0,0.0
+ParentChildTemporalRule,Temporal,0,0,0,20,0.0,0.0
+ProcessActivityTemporalRule,Temporal,0,0,0,20,0.0,0.0
+SequenceMonotonicityRule,Temporal,6,3,3,17,0.5,0.15
+SpawnConsistencyRule,Semantic,2,2,0,18,1.0,0.1
+ExecutionConsistencyRule,Semantic,0,0,0,20,0.0,0.0
+ReadWriteConsistencyRule,Semantic,2,2,0,18,1.0,0.1
+NetworkConsistencyRule,Semantic,1,1,0,19,1.0,0.05
+DeleteConsistencyRule,Semantic,0,0,0,20,0.0,0.0

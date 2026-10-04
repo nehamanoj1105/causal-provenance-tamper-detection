@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\centering
+\caption{Scalability: separate construction/poisoning/detection phases, 5 reps.}
+\label{tab:scalability}
+\begin{tabular}{lrrrrrrrrr}
+\hline
+edges & n_reps & construction_sec & poisoning_sec & rule_engine_infer_sec & rule_engine_infer_std & end_to_end_sec & peak_python_mb & rss_delta_mb & throughput_eps \\
+\hline
+10000 & 5 & 0.1809 & 1.0019 & 0.3661 & 0.0762 & 1.5490 & 36.8675 & 86.3602 & 28087.8950 \\
+25000 & 5 & 0.5558 & 2.9456 & 1.1417 & 0.1860 & 4.6432 & 24.9328 & 4.7375 & 22296.6507 \\
+50000 & 5 & 1.0984 & 5.4340 & 2.0759 & 0.2533 & 8.6083 & 49.4251 & 24.0703 & 24368.1417 \\
+100000 & 5 & 2.0790 & 10.9685 & 3.1541 & 0.0441 & 16.2017 & 98.1481 & 63.3188 & 31709.4065 \\
+250000 & 5 & 5.2243 & 31.8043 & 7.9138 & 0.1177 & 44.9424 & 244.1135 & 218.1258 & 31596.0640 \\
+500000 & 5 & 10.9296 & 64.6772 & 17.1089 & 0.0501 & 92.7158 & 486.5882 & 476.0719 & 29224.7195 \\
+1000000 & 5 & 21.2069 & 131.4849 & 34.4796 & 0.4639 & 187.1714 & 971.4415 & 1036.6398 & 29006.8281 \\
+\hline
+\end{tabular}
+\end{table}

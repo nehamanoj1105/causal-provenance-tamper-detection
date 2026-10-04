@@ -1,0 +1,41 @@
+# Dataset (downloaded separately, see data/README.md)
+data/raw/
+data/processed/
+*.json
+*.csv
+!results/dataset_statistics.csv
+*.bin
+*.parquet
+!data/samples/*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Model artifacts
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# OS / editor
+.DS_Store
+.vscode/
+
+
+
+# Downloaded DARPA archives
+*.tar.gz
+
+# Generated parsed data
+data/parsed/
+
+# Extracted Avro segments
+data/samples/*
+!data/samples/.gitkeep

@@ -1,0 +1,3 @@
+Dataset,Detector,Nodes,Edges,Precision,Recall,F1,Accuracy,Runtime,Memory
+synthetic,Rule Engine,80,179,0.8125,0.65,0.722222,0.945652,0.006008,0.064323
+synthetic,GraphSAGE,80,179,0.545455,0.4,0.461538,0.921788,1.302953,19.71875

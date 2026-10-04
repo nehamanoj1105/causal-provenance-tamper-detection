@@ -1,0 +1,7 @@
+experiment,dataset,attacks,seeds,detectors,positive_universe
+Synthetic main detection,"Synthetic (30 proc, 40 file, 10 net)",5 del + 5 ins + 5 reord + 5 forgery,10,Rule Engine / GraphSAGE,final-graph (10 detectable + 5 undetectable)
+Real Theia + poisoning,"Theia E3 3 / 5m, 50k-edge cap",20 ops (15 detectable),10,Rule Engine / GraphSAGE,final-graph
+Mimicry robustness,Synthetic,5+5+5+5 poison + camouflage,10,Rule Engine / GraphSAGE,final-graph
+Rule ablation,Synthetic,same as main,10,Rule Engine,final-graph
+Generalization,synthetic↔Theia,soft graph only,5,Rule Engine / GraphSAGE,final-graph
+Scalability,Synthetic 10k–1M,none,5 reps,Rule Engine,n/a

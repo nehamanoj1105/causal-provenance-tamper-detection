@@ -1,0 +1,30 @@
+\begin{table}[htbp]
+\centering
+\caption{Rule-group and leave-one-rule-out ablation, 10 seeds.}
+\label{tab:ablation}
+\begin{tabular}{lrrrrrrrr}
+\hline
+variant & n & mean & std & median & min & max & ci_low & ci_high \\
+\hline
+all_rules & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_DeleteConsistencyRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_DuplicateEdgeRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_DuplicateEventRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_ExecutionConsistencyRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_MissingNodeRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_NetworkConsistencyRule & 10 & 0.7455 & 0.0844 & 0.7507 & 0.6154 & 0.8667 & 0.6851 & 0.8059 \\
+loo_ParentChildTemporalRule & 10 & 0.8170 & 0.0412 & 0.8117 & 0.7568 & 0.8750 & 0.7875 & 0.8464 \\
+loo_ProcessActivityTemporalRule & 10 & 0.8280 & 0.0382 & 0.8331 & 0.7568 & 0.8750 & 0.8007 & 0.8553 \\
+loo_ReadWriteConsistencyRule & 10 & 0.5173 & 0.1136 & 0.5093 & 0.3200 & 0.6667 & 0.4360 & 0.5985 \\
+loo_SelfLoopRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_SequenceGapRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_SequenceMonotonicityRule & 10 & 0.7802 & 0.0863 & 0.7800 & 0.6061 & 0.8889 & 0.7185 & 0.8420 \\
+loo_SpawnConsistencyRule & 10 & 0.7417 & 0.0903 & 0.7538 & 0.5789 & 0.8571 & 0.6771 & 0.8063 \\
+loo_TimestampRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+loo_UnspawnedProcessRule & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+without_semantic & 10 & 0.8048 & 0.0627 & 0.8117 & 0.6829 & 0.8750 & 0.7600 & 0.8496 \\
+without_structural & 10 & 0.3285 & 0.0731 & 0.3478 & 0.1739 & 0.4286 & 0.2762 & 0.3807 \\
+without_temporal & 10 & 0.7983 & 0.0055 & 0.8000 & 0.7826 & 0.8000 & 0.7943 & 0.8022 \\
+\hline
+\end{tabular}
+\end{table}

@@ -1,0 +1,2 @@
+Attack,Precision_Mean,Precision_Std,Recall_Mean,Recall_Std,F1_Mean,F1_Std,Accuracy_Mean,Accuracy_Std,FalsePositiveRate_Mean,FalsePositiveRate_Std,FalseNegativeRate_Mean,FalseNegativeRate_Std,Specificity_Mean,Specificity_Std,BalancedAccuracy_Mean,BalancedAccuracy_Std
+all,0.803944,0.069644,0.79,0.102198,0.792082,0.057799,0.955435,0.011108,0.02439,0.010364,0.21,0.102198,0.97561,0.010364,0.882805,0.049171

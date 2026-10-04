@@ -1,0 +1,70 @@
+{
+  "claims": {
+    "conference": {
+      "returncode": 0,
+      "output": "conference claims: 48 ok=48 bad=0",
+      "error": "",
+      "ok": 48,
+      "bad": 0
+    },
+    "journal": {
+      "returncode": 0,
+      "output": "journal claims: 89 ok=89 bad=0",
+      "error": "",
+      "ok": 89,
+      "bad": 0
+    }
+  },
+  "retracted_scan": [
+    {
+      "file": "final_manuscripts/conference/conference_paper.tex",
+      "line": 250,
+      "value": "0.5600",
+      "reason": "leaky GraphSAGE seed-42 F1",
+      "legitimate_audit_context": true,
+      "text": "must not be conflated: $0.5600$ is the starting repository's seed-42 result under"
+    }
+  ],
+  "tables": {
+    "conference:table1_dataset_statistics": "identical",
+    "journal:table1_dataset_statistics": "identical",
+    "conference:table2_experimental_protocol": "identical",
+    "journal:table2_experimental_protocol": "identical",
+    "conference:table3_main_detection": "identical",
+    "journal:table3_main_detection": "identical",
+    "conference:table4_statistical_comparison": "identical",
+    "journal:table4_statistical_comparison": "identical",
+    "conference:table5_cross_dataset": "identical",
+    "journal:table5_cross_dataset": "identical",
+    "conference:table6_mimicry": "identical",
+    "journal:table6_mimicry": "identical",
+    "conference:table7_rule_ablation": "identical",
+    "journal:table7_rule_ablation": "identical",
+    "conference:table8_scalability": "identical",
+    "journal:table8_scalability": "identical",
+    "conference:table9_real_data_poisoning": "identical",
+    "journal:table9_real_data_poisoning": "identical"
+  },
+  "build": {
+    "conference": {
+      "errors": [],
+      "undefined_refs": [],
+      "overfull": 0,
+      "pages": 6
+    },
+    "journal": {
+      "errors": [],
+      "undefined_refs": [],
+      "overfull": 0,
+      "pages": 9
+    }
+  },
+  "summary": {
+    "claim_discrepancies": 0,
+    "retracted_misuse": 0,
+    "table_mismatches": 0,
+    "latex_errors": 0,
+    "undefined_refs": 0,
+    "overfull": 0
+  }
+}

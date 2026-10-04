@@ -2,17 +2,17 @@
 
 | Graph Size (Edges) | Detector | Execution Time (s) | Throughput (Edges / Sec) |
 |---|---|---|---|
-| 10,000 | Rule Engine | 0.1470 | 68,025.08 |
-| 10,000 | GraphSAGE Inference | 0.0058 | 1,734,975.80 |
-| 25,000 | Rule Engine | 0.5260 | 47,532.97 |
-| 25,000 | GraphSAGE Inference | 0.0146 | 1,711,876.97 |
-| 50,000 | Rule Engine | 1.4074 | 35,527.67 |
-| 50,000 | GraphSAGE Inference | 0.0199 | 2,508,314.99 |
-| 100,000 | Rule Engine | 1.4513 | 68,905.68 |
-| 100,000 | GraphSAGE Inference | 0.0454 | 2,203,133.75 |
-| 250,000 | Rule Engine | 3.7924 | 65,921.48 |
-| 250,000 | GraphSAGE Inference | 0.1272 | 1,964,986.98 |
-| 500,000 | Rule Engine | 7.8826 | 63,430.75 |
-| 500,000 | GraphSAGE Inference | 0.3295 | 1,517,590.33 |
-| 1,000,000 | Rule Engine | 16.9903 | 58,857.01 |
-| 1,000,000 | GraphSAGE Inference | 0.5271 | 1,897,308.50 |
+| 10,000 | Rule Engine | 0.2652 | 37,705.64 |
+| 10,000 | GraphSAGE Inference | 0.0107 | 936,270.37 |
+| 25,000 | Rule Engine | 0.6879 | 36,344.92 |
+| 25,000 | GraphSAGE Inference | 0.0164 | 1,526,067.15 |
+| 50,000 | Rule Engine | 1.4536 | 34,397.20 |
+| 50,000 | GraphSAGE Inference | 0.0299 | 1,673,611.21 |
+| 100,000 | Rule Engine | 3.0168 | 33,148.17 |
+| 100,000 | GraphSAGE Inference | 0.0610 | 1,639,841.27 |
+| 250,000 | Rule Engine | 7.8870 | 31,697.83 |
+| 250,000 | GraphSAGE Inference | 0.2024 | 1,235,457.47 |
+| 500,000 | Rule Engine | 16.2817 | 30,709.23 |
+| 500,000 | GraphSAGE Inference | 0.3851 | 1,298,252.72 |
+| 1,000,000 | Rule Engine | 33.6869 | 29,685.12 |
+| 1,000,000 | GraphSAGE Inference | 0.8815 | 1,134,462.47 |

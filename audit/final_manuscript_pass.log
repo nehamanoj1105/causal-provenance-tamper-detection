@@ -1,0 +1,57 @@
+### python3 -c import numpy,pandas,sklearn,scipy,matplotlib,networkx,tqdm,torch,torch_geometric as g; print('numpy',numpy.__version__);print('torch',torch.__version__);print('torch_geometric',g.__version__);print('sklearn',sklearn.__version__)
+/home/openhands/.local/lib/python3.13/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+numpy 2.5.3
+torch 2.14.1+cpu
+torch_geometric 2.8.0.post1
+sklearn 1.9.1
+EXIT=0
+
+### python3 audit/scripts/make_final.py
+reconciliation rows: 16
+tables written to audit/journal_ready_tables
+EXIT=0
+
+### python3 audit/scripts/build_final_results.py
+FINAL_RESULTS built at audit/FINAL_RESULTS
+EXIT=0
+
+### python3 audit/scripts/make_manuscript_tables.py
+manuscript tables written
+EXIT=0
+
+### python3 audit/scripts/make_latex_tables.py
+curated LaTeX tables written
+EXIT=0
+
+### python3 audit/scripts/gen_final_figures.py
+figures written to audit/FINAL_RESULTS/figures
+EXIT=0
+
+### python3 audit/scripts/final_validation.py
+======================================================================
+[metric recomputation] checked=1890 mismatches=0
+[checks] total=226 match=225 close=0 discrepancy=0
+[issues] 0
+EXIT=0
+
+### python3 audit/scripts/independent_recheck.py
+/home/openhands/.local/lib/python3.13/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+seed 1: deterministic=True RE f1 0.810811 GS f1 0.500000
+seed 42: deterministic=True RE f1 0.848485 GS f1 0.222222
+seed 1024: deterministic=True RE f1 0.812500 GS f1 0.000000
+EXIT=0
+
+### python3 audit/manuscript_validation/check_conference.py
+conference claims: 48 ok=48 bad=0
+EXIT=0
+
+### python3 audit/manuscript_validation/check_journal.py
+journal claims: 89 ok=89 bad=0
+EXIT=0
+
+### python3 audit/scripts/final_verify.py
+final verification: pass=72 fail=0
+EXIT=0
+
