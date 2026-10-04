@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.10.4)  4 OCT 2026 11:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.10.4)  4 OCT 2026 05:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -22,7 +22,6 @@ LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 5
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
-** ATTENTION: Single column mode is not typically used with IEEE publications.
 -- Using 8.5in x 11in (letter) paper.
 -- Using PDF output.
 \@IEEEnormalsizeunitybaselineskip=\dimen144
@@ -404,11 +403,7 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count310
 \l__pdf_internal_box=\box61
 )
-(./journal_paper.aux
-
-LaTeX Warning: Label `tab:reconciliation' multiply defined.
-
-)
+(./journal_paper.aux)
 \openout1 = `journal_paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -472,8 +467,18 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
+
+Underfull \vbox (badness 5504) has occurred while \output is active []
+
+
+
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-
-dist/fonts/enc/dvips/base/8r.enc}]
+dist/fonts/enc/dvips/base/8r.enc}
+
+
+]
+
+
 Underfull \hbox (badness 5231) in paragraph at lines 176--177
 []\OT1/ptm/m/n/9 modify de-tec-tor/parser, com-pro-mise
  []
@@ -481,12 +486,19 @@ Underfull \hbox (badness 5231) in paragraph at lines 176--177
 
 
 [2]
+Underfull \hbox (badness 1688) in paragraph at lines 228--235
+[]\OT1/ptm/m/n/10 The learned base-line is a two-layer Graph-SAGE en-
+ []
+
+
+
+
 
 [3]
 
-[4]
 
-[5] (./tables/table10_reconciliation.tex
+
+[4] (./tables/table10_reconciliation.tex
 Underfull \hbox (badness 3919) in paragraph at lines 12--13
 \OT1/ptm/m/n/9 a gen-uine con-tin-u-ous severity-weighted
  []
@@ -524,162 +536,138 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--15
 
 )
 
-[6]
 
-[7]
+Underfull \hbox (badness 2080) in paragraph at lines 498--507
+[]\OT1/ptm/m/n/10 The re-sults sup-port a spe-cific, bounded claim: post-
+ []
 
-[8]
 
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 819--820
+
+[5]
+Underfull \hbox (badness 1394) in paragraph at lines 530--541
+[]\OT1/ptm/m/n/10 We re-lease the cor-rected pro-to-col, the poi-son-ing and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 554--555
 []\OT1/ptm/m/n/9 poisoning, mimicry, leakage-free
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 820--821
+Underfull \hbox (badness 10000) in paragraph at lines 555--556
 []\OT1/ptm/m/n/9 dataset prove-nance, check-sums,
  []
 
-(./tables/table3_main_detection.tex) (./tables/table11_per_seed_synthetic.tex)
-(./tables/table9_real_data_poisoning.tex) (./tables/table6_mimicry.tex)
-(./tables/table7_rule_ablation.tex)
-(./tables/table17_rule_family_contribution.tex)
+
+Underfull \vbox (badness 1048) has occurred while \output is active []
+
+
+
+(./tables/table3_main_detection.tex) (./tables/table9_real_data_poisoning.tex)
+(./tables/table6_mimicry.tex) (./tables/table7_rule_ablation.tex)
 (./tables/table5_cross_dataset.tex) (./tables/table8_scalability.tex)
-(./tables/table16_scalability_detail.tex)
 (./tables/table4_statistical_comparison.tex)
 (./tables/table1_dataset_statistics.tex)
-(./tables/table12_dataset_characteristics.tex
-Underfull \hbox (badness 10000) in paragraph at lines 11--11
-[]\OT1/ptm/m/n/9 post-collection
- []
-
-
-Underfull \hbox (badness 5388) in paragraph at lines 12--12
-[]\OT1/ptm/m/n/9 Theia E3 sce-nario 5m
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 12--12
-[]\OT1/ptm/m/n/9 post-collection
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 13--13
-[]\OT1/ptm/m/n/9 unavailable (drive
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 14--14
-[]\OT1/ptm/m/n/9 unavailable (drive
- []
-
-) (./tables/table14_rule_statistics.tex)
-(./tables/table15_rule_engine_auc_scores.tex)
-(./tables/table13_attack_operator_audit.tex)
-(./tables/table18_graphsage_configuration.tex)
-(./tables/table19_per_seed_full.tex) (./tables/table20_scalability_per_rep.tex)
-(./tables/table21_rule_catalogue.tex)
-<figures/fig_main_performance.pdf, id=361, 640.97206pt x 293.8569pt>
+<figures/fig_main_performance.pdf, id=269, 640.97206pt x 293.8569pt>
 File: figures/fig_main_performance.pdf Graphic file (type pdf)
 <use figures/fig_main_performance.pdf>
-Package pdftex.def Info: figures/fig_main_performance.pdf  used on input line 8
-61.
-(pdftex.def)             Requested size: 490.19843pt x 224.73254pt.
-<figures/fig_roc_pr.pdf, id=362, 640.97401pt x 285.74432pt>
+Package pdftex.def Info: figures/fig_main_performance.pdf  used on input line 5
+85.
+(pdftex.def)             Requested size: 239.39923pt x 109.75215pt.
+<figures/fig_roc_pr.pdf, id=270, 640.97401pt x 285.74432pt>
 File: figures/fig_roc_pr.pdf Graphic file (type pdf)
 <use figures/fig_roc_pr.pdf>
-Package pdftex.def Info: figures/fig_roc_pr.pdf  used on input line 869.
-(pdftex.def)             Requested size: 490.19843pt x 218.52827pt.
-<figures/fig_leakage.pdf, id=363, 366.34804pt x 279.43805pt>
+Package pdftex.def Info: figures/fig_roc_pr.pdf  used on input line 593.
+(pdftex.def)             Requested size: 239.39923pt x 106.7222pt.
+<figures/fig_leakage.pdf, id=271, 366.34804pt x 279.43805pt>
 File: figures/fig_leakage.pdf Graphic file (type pdf)
 <use figures/fig_leakage.pdf>
-Package pdftex.def Info: figures/fig_leakage.pdf  used on input line 877.
-(pdftex.def)             Requested size: 412.80157pt x 314.87015pt.
-<figures/fig_mimicry.pdf, id=364, 437.65993pt x 293.89204pt>
+Package pdftex.def Info: figures/fig_leakage.pdf  used on input line 601.
+(pdftex.def)             Requested size: 201.60077pt x 153.7724pt.
+<figures/fig_mimicry.pdf, id=272, 437.65993pt x 293.89204pt>
 File: figures/fig_mimicry.pdf Graphic file (type pdf)
 <use figures/fig_mimicry.pdf>
-Package pdftex.def Info: figures/fig_mimicry.pdf  used on input line 884.
-(pdftex.def)             Requested size: 490.19843pt x 329.17027pt.
-<figures/fig_ablation.pdf, id=365, 495.40205pt x 308.34409pt>
+Package pdftex.def Info: figures/fig_mimicry.pdf  used on input line 608.
+(pdftex.def)             Requested size: 239.39923pt x 160.75768pt.
+<figures/fig_ablation.pdf, id=273, 495.40205pt x 308.34409pt>
 File: figures/fig_ablation.pdf Graphic file (type pdf)
 <use figures/fig_ablation.pdf>
-Package pdftex.def Info: figures/fig_ablation.pdf  used on input line 891.
-(pdftex.def)             Requested size: 490.19843pt x 305.12042pt.
-<figures/fig_scalability.pdf, id=366, 857.61028pt x 272.30472pt>
+Package pdftex.def Info: figures/fig_ablation.pdf  used on input line 615.
+(pdftex.def)             Requested size: 239.39923pt x 149.00563pt.
+<figures/fig_scalability.pdf, id=274, 857.61028pt x 272.30472pt>
 File: figures/fig_scalability.pdf Graphic file (type pdf)
 <use figures/fig_scalability.pdf>
-Package pdftex.def Info: figures/fig_scalability.pdf  used on input line 898.
-(pdftex.def)             Requested size: 490.19843pt x 155.64742pt.
-<figures/fig_generalization.pdf, id=367, 532.60982pt x 293.8569pt>
+Package pdftex.def Info: figures/fig_scalability.pdf  used on input line 622.
+(pdftex.def)             Requested size: 239.39923pt x 76.01212pt.
+<figures/fig_generalization.pdf, id=275, 532.60982pt x 293.8569pt>
 File: figures/fig_generalization.pdf Graphic file (type pdf)
 <use figures/fig_generalization.pdf>
-Package pdftex.def Info: figures/fig_generalization.pdf  used on input line 905
+Package pdftex.def Info: figures/fig_generalization.pdf  used on input line 629
 .
-(pdftex.def)             Requested size: 490.19843pt x 270.46373pt.
+(pdftex.def)             Requested size: 239.39923pt x 132.08641pt.
 
 
-[10] (./tables/table22_reconciliation.tex)
+[6 <./figures/fig_main_performance.pdf>]
 
-[11]
 
-[12]
+Underfull \hbox (badness 10000) in paragraph at lines 667--670
+[]\OT1/ptm/m/n/8 DARPA I2O, ``Trans-par-ent Com-put-ing En-gage-ment 3 data
+ []
 
-[13]
 
-[14]
+Underfull \hbox (badness 10000) in paragraph at lines 667--670
+\OT1/ptm/m/n/8 re-lease,'' 2020. [On-line]. Avail-able: []$https : / / github .
+ com / darpa-[]i2o /
+ []
 
-[15]
 
-[16]
 
-[17 <./figures/fig_main_performance.pdf>]
+[7]
 
-[18 <./figures/fig_roc_pr.pdf> <./figures/fig_leakage.pdf>]
 
-[19 <./figures/fig_mimicry.pdf> <./figures/fig_ablation.pdf>]
 
-[20 <./figures/fig_scalability.pdf> <./figures/fig_generalization.pdf>]
+[8 <./figures/fig_roc_pr.pdf> <./figures/fig_leakage.pdf>]
 
-[21] (./journal_paper.aux)
+
+
+[9
+
+ <./figures/fig_mimicry.pdf> <./figures/fig_ablation.pdf> <./figures/fig_scalab
+ility.pdf> <./figures/fig_generalization.pdf>] (./journal_paper.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `journal_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 434A0F8A311B3F713DB73B5582892A31;9297.
+(rerunfilecheck)             Checksum: 075E273921CAE9CEE0A24483DBD84E6D;6166.
  ) 
 Here is how much of TeX's memory you used:
- 11236 strings out of 475178
- 178950 string characters out of 5766539
- 657794 words of memory out of 5000000
- 33920 multiletter control sequences out of 15000+600000
- 598468 words of font info for 114 fonts, out of 8000000 for 9000
+ 11064 strings out of 475178
+ 174100 string characters out of 5766539
+ 597570 words of memory out of 5000000
+ 33821 multiletter control sequences out of 15000+600000
+ 599564 words of font info for 115 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,79p,405b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,364b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/urw/times/utmri8a.pfb>
-Output written on journal_paper.pdf (21 pages, 355580 bytes).
+onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/urw/times/utmri8a.pfb>
+Output written on journal_paper.pdf (9 pages, 322897 bytes).
 PDF statistics:
- 932 PDF objects out of 1000 (max. 8388607)
- 527 compressed objects within 6 object streams
- 118 named destinations out of 1000 (max. 500000)
- 452 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 787 PDF objects out of 1000 (max. 8388607)
+ 398 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 340 words of extra memory for PDF output out of 10000 (max. 10000000)
 
