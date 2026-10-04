@@ -1,0 +1,15 @@
+\begin{table*}[t]
+\centering
+\small
+\caption{Paired Rule Engine vs GraphSAGE comparison over identical test instances (10 seeds, Wilcoxon signed-rank).}
+\label{tab:significance}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+Metric & $\Delta$ & 95\% CI & Cohen $d_z$ & Wilcoxon $p$ & $n$ \\
+\midrule
+F1 & 0.4824 & [0.328, 0.636] & 2.24 & 0.0020 & 10 \\
+ROC-AUC & 0.1239 & [0.005, 0.242] & 0.75 & 0.1055 & 10 \\
+\bottomrule
+\end{tabular}
+\end{table*}

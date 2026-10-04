@@ -1,0 +1,29 @@
+\begin{table}[t]
+\centering
+\caption{Reconciliation of every committed value against its corrected counterpart. Disposition is yes (reproduces qualitatively), no (does not reproduce) or n/a (never reported). Values are shown to six decimals; the raw audit files preserve full precision.}
+\label{tab:reconciliation}
+{\small
+\begin{tabular}{lp{5.6cm}rr}
+\toprule
+Disposition & Experiment & Committed & Corrected \\
+\midrule
+yes & Synthetic RE precision (seed 42) & 0.812500 & 0.714600 \\
+yes & Synthetic RE recall (seed 42) & 0.650000 & 0.932900 \\
+yes & Synthetic RE F1 (seed 42) & 0.722222 & 0.848500 \\
+no & Synthetic RE multi-seed F1 mean (comm. & 0.722200 & 0.804806 \\
+no & Synthetic GraphSAGE F1 & 0.560000 & 0.322437 \\
+no & Mimicry none, RE F1 & -- & 0.804806 \\
+no & Mimicry light, RE F1 & -- & 0.804806 \\
+no & Mimicry medium, RE F1 & -- & 0.804806 \\
+no & Mimicry heavy, RE F1 & -- & 0.804806 \\
+no & RE ROC-AUC under mimicry & 1.000000 & 0.952846 \\
+no & DARPA theia3, RE F1 & -- & 0.834744 \\
+no & DARPA theia3, GS F1 & -- & 0.033959 \\
+no & DARPA theia5m, RE F1 & -- & 0.850371 \\
+no & DARPA theia5m, GS F1 & -- & 0.009855 \\
+n/a & Paired RE--GS F1 difference & -- & 0.482369 \\
+n/a & Paired RE--GS ROC-AUC difference & -- & 0.123919 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
