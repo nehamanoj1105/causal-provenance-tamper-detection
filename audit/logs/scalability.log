@@ -1,0 +1,42 @@
+nohup: ignoring input
+/home/openhands/.local/lib/python3.13/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+done 10000 0 edges 10000 REs 0.347 eps 28815.0
+done 10000 1 edges 10000 REs 0.5008 eps 19969.0
+done 10000 2 edges 10000 REs 0.3232 eps 30937.0
+done 10000 3 edges 10000 REs 0.3412 eps 29308.0
+done 10000 4 edges 10000 REs 0.3184 eps 31410.0
+done 25000 0 edges 25000 REs 0.9925 eps 25189.0
+done 25000 1 edges 25000 REs 1.0993 eps 22742.0
+done 25000 2 edges 25000 REs 1.0664 eps 23444.0
+done 25000 3 edges 25000 REs 1.4664 eps 17049.0
+done 25000 4 edges 25000 REs 1.0842 eps 23059.0
+/home/openhands/.local/lib/python3.13/site-packages/sklearn/metrics/_classification.py:614: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+done 50000 0 edges 50000 REs 2.1207 eps 23577.0
+done 50000 1 edges 50000 REs 2.4376 eps 20512.0
+done 50000 2 edges 50000 REs 2.1541 eps 23211.0
+done 50000 3 edges 50000 REs 1.8248 eps 27400.0
+done 50000 4 edges 50000 REs 1.8423 eps 27141.0
+done 100000 0 edges 100000 REs 3.1178 eps 32074.0
+done 100000 1 edges 100000 REs 3.1055 eps 32201.0
+done 100000 2 edges 100000 REs 3.192 eps 31329.0
+/home/openhands/.local/lib/python3.13/site-packages/sklearn/metrics/_classification.py:614: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+done 100000 3 edges 100000 REs 3.2057 eps 31194.0
+done 100000 4 edges 100000 REs 3.1496 eps 31750.0
+done 250000 0 edges 250000 REs 7.8465 eps 31861.0
+done 250000 1 edges 250000 REs 7.7619 eps 32209.0
+done 250000 2 edges 250000 REs 7.9088 eps 31610.0
+done 250000 3 edges 250000 REs 8.0625 eps 31008.0
+done 250000 4 edges 250000 REs 7.9892 eps 31292.0
+done 500000 0 edges 500000 REs 17.1195 eps 29207.0
+done 500000 1 edges 500000 REs 17.1726 eps 29116.0
+done 500000 2 edges 500000 REs 17.1282 eps 29192.0
+done 500000 3 edges 500000 REs 17.0863 eps 29263.0
+done 500000 4 edges 500000 REs 17.0381 eps 29346.0
+done 1000000 0 edges 1000000 REs 35.2475 eps 28371.0
+done 1000000 1 edges 1000000 REs 34.5103 eps 28977.0
+done 1000000 2 edges 1000000 REs 34.4083 eps 29063.0
+done 1000000 3 edges 1000000 REs 34.133 eps 29297.0
+done 1000000 4 edges 1000000 REs 34.0988 eps 29327.0

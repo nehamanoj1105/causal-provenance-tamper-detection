@@ -1,0 +1,86 @@
+nohup: ignoring input
+Defaulting to user installation because normal site-packages is not writeable
+Looking in indexes: https://download.pytorch.org/whl/cpu
+Collecting torch
+  Using cached torch-2.14.1%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (37 kB)
+Requirement already satisfied: filelock in /home/openhands/.local/lib/python3.13/site-packages (from torch) (4.0.9)
+Requirement already satisfied: typing-extensions>=4.10.0 in /home/openhands/.local/lib/python3.13/site-packages (from torch) (4.16.0)
+Collecting setuptools>=77.0.3 (from torch)
+  Downloading setuptools-78.1.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting sympy>=1.13.3 (from torch)
+  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Requirement already satisfied: networkx>=2.5.1 in /home/openhands/.local/lib/python3.13/site-packages (from torch) (3.7)
+Collecting jinja2 (from torch)
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec>=0.8.5 (from torch)
+  Downloading fsspec-2026.7.0-py3-none-any.whl.metadata (10 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch)
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Downloading markupsafe-3.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Downloading torch-2.14.1%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl (196.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 196.3/196.3 MB 85.2 MB/s  0:00:02
+Downloading fsspec-2026.7.0-py3-none-any.whl (206 kB)
+Downloading setuptools-78.1.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 30.6 MB/s  0:00:00
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 111.7 MB/s  0:00:00
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 40.9 MB/s  0:00:00
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading markupsafe-3.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Installing collected packages: mpmath, sympy, setuptools, MarkupSafe, fsspec, jinja2, torch
+  WARNING: The script isympy is installed in '/home/openhands/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts torchfrtrace and torchrun are installed in '/home/openhands/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+
+Successfully installed MarkupSafe-3.0.3 fsspec-2026.7.0 jinja2-3.1.6 mpmath-1.3.0 setuptools-78.1.0 sympy-1.14.0 torch-2.14.1+cpu
+Defaulting to user installation because normal site-packages is not writeable
+Collecting torch-geometric
+  Downloading torch_geometric-2.8.0.post1-py3-none-any.whl.metadata (64 kB)
+Collecting aiohttp (from torch-geometric)
+  Downloading aiohttp-3.14.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)
+Requirement already satisfied: fsspec in /home/openhands/.local/lib/python3.13/site-packages (from torch-geometric) (2026.7.0)
+Requirement already satisfied: jinja2 in /home/openhands/.local/lib/python3.13/site-packages (from torch-geometric) (3.1.6)
+Requirement already satisfied: numpy in /home/openhands/.local/lib/python3.13/site-packages (from torch-geometric) (2.5.3)
+Requirement already satisfied: psutil>=5.8.0 in /home/openhands/.local/lib/python3.13/site-packages (from torch-geometric) (7.2.2)
+Requirement already satisfied: pyparsing in /home/openhands/.local/lib/python3.13/site-packages (from torch-geometric) (3.3.3)
+Requirement already satisfied: requests in /home/openhands/.local/lib/python3.13/site-packages (from torch-geometric) (2.34.2)
+Requirement already satisfied: tqdm in /home/openhands/.local/lib/python3.13/site-packages (from torch-geometric) (4.70.1)
+Collecting xxhash (from torch-geometric)
+  Downloading xxhash-4.0.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (17 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp->torch-geometric)
+  Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.4.0 (from aiohttp->torch-geometric)
+  Downloading aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting attrs>=17.3.0 (from aiohttp->torch-geometric)
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp->torch-geometric)
+  Downloading frozenlist-1.8.0-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (20 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp->torch-geometric)
+  Downloading multidict-6.9.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp->torch-geometric)
+  Downloading propcache-0.5.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (25 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp->torch-geometric)
+  Downloading yarl-1.25.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (111 kB)
+Requirement already satisfied: idna>=2.0 in /home/openhands/.local/lib/python3.13/site-packages (from yarl<2.0,>=1.17.0->aiohttp->torch-geometric) (3.20)
+Requirement already satisfied: MarkupSafe>=2.0 in /home/openhands/.local/lib/python3.13/site-packages (from jinja2->torch-geometric) (3.0.3)
+Requirement already satisfied: charset_normalizer<4,>=2 in /home/openhands/.local/lib/python3.13/site-packages (from requests->torch-geometric) (3.5.2)
+Requirement already satisfied: urllib3<3,>=1.26 in /home/openhands/.local/lib/python3.13/site-packages (from requests->torch-geometric) (2.8.0)
+Requirement already satisfied: certifi>=2023.5.7 in /home/openhands/.local/lib/python3.13/site-packages (from requests->torch-geometric) (2026.7.22)
+Downloading torch_geometric-2.8.0.post1-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 42.6 MB/s  0:00:00
+Downloading aiohttp-3.14.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 80.6 MB/s  0:00:00
+Downloading multidict-6.9.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (336 kB)
+Downloading yarl-1.25.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (117 kB)
+Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+Downloading frozenlist-1.8.0-cp313-cp313-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (234 kB)
+Downloading propcache-0.5.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (234 kB)
+Downloading xxhash-4.0.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (268 kB)
+Installing collected packages: xxhash, propcache, multidict, frozenlist, attrs, aiohappyeyeballs, yarl, aiosignal, aiohttp, torch-geometric
+
+Successfully installed aiohappyeyeballs-2.7.1 aiohttp-3.14.3 aiosignal-1.4.0 attrs-26.1.0 frozenlist-1.8.0 multidict-6.9.1 propcache-0.5.4 torch-geometric-2.8.0.post1 xxhash-4.0.1 yarl-1.25.1

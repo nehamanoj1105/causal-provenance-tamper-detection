@@ -1,0 +1,18 @@
+nohup: ignoring input
+/home/openhands/.local/lib/python3.13/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+done synthetic theia3 1
+done synthetic theia3 7
+done synthetic theia3 13
+done synthetic theia3 21
+done synthetic theia3 42
+done theia3 theia5m 1
+done theia3 theia5m 7
+done theia3 theia5m 13
+done theia3 theia5m 21
+done theia3 theia5m 42
+done theia5m theia3 1
+done theia5m theia3 7
+done theia5m theia3 13
+done theia5m theia3 21
+done theia5m theia3 42

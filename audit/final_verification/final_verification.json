@@ -1,0 +1,366 @@
+{
+  "pass": 72,
+  "fail": 0,
+  "results": [
+    {
+      "check": "exists: audit/FINAL_MANUSCRIPT_REPORT.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/final_proposal.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/reviewer_feedback_resolution.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_DELIVERABLE_INDEX.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_RESULTS/README.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_RESULTS/FINAL_NUMBERS.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_RESULTS/DATASET_SUMMARY.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_RESULTS/EXPERIMENTAL_PROTOCOL.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_RESULTS/REPRODUCIBILITY.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_RESULTS/LIMITATIONS.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/FINAL_RESULTS/figures/FIGURE_SOURCE_MAP.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/manuscript_validation/manuscript_validation_report.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/manuscript_validation/conference_number_check.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/manuscript_validation/journal_number_check.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: final_manuscripts/conference/conference_paper.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: final_manuscripts/conference/conference_paper.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: final_manuscripts/journal/journal_paper.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: final_manuscripts/journal/journal_paper.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exists: audit/final_manuscript_pass.log",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_main_performance.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_main_performance.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_main_performance.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_roc_pr.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_roc_pr.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_roc_pr.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_leakage.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_leakage.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_leakage.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_mimicry.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_mimicry.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_mimicry.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_ablation.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_ablation.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_ablation.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_scalability.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_scalability.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_scalability.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_generalization.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_generalization.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "figure artifact: fig_generalization.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table1_dataset_statistics.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table1_dataset_statistics.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table1_dataset_statistics.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table2_experimental_protocol.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table2_experimental_protocol.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table2_experimental_protocol.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table3_main_detection.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table3_main_detection.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table3_main_detection.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table4_statistical_comparison.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table4_statistical_comparison.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table4_statistical_comparison.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table5_cross_dataset.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table5_cross_dataset.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table5_cross_dataset.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table6_mimicry.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table6_mimicry.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table6_mimicry.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table7_rule_ablation.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table7_rule_ablation.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table7_rule_ablation.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table8_scalability.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table8_scalability.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table8_scalability.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table9_real_data_poisoning.csv",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table9_real_data_poisoning.md",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "table artifact: table9_real_data_poisoning.tex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "forbidden-pattern scan complete",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "RE f1 mean matches raw synthetic runs",
+      "status": "PASS",
+      "detail": "0.8048056201634507 vs 0.8048056201634507"
+    },
+    {
+      "check": "10 synthetic seeds present",
+      "status": "PASS",
+      "detail": "10"
+    },
+    {
+      "check": "all recheck seeds deterministic",
+      "status": "PASS",
+      "detail": "[True, True, True]"
+    },
+    {
+      "check": "DARPA table labelled synthetic post-collection poisoning",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

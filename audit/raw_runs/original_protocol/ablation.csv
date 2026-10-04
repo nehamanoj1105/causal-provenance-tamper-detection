@@ -1,0 +1,20 @@
+Configuration,NumRules,Precision,Recall,F1,Accuracy,Runtime
+ALL Rules Enabled,15,0.8125,0.65,0.722222,0.945652,0.001287
+Without Structural Rules,9,0.727273,0.4,0.516129,0.918478,0.000865
+Without Temporal Rules,11,1.0,0.5,0.666667,0.945652,0.000775
+Without Semantic Rules,10,0.727273,0.4,0.516129,0.918478,0.00079
+Without DuplicateEdgeRule,14,0.8125,0.65,0.722222,0.945652,0.001207
+Without DuplicateEventRule,14,0.8125,0.65,0.722222,0.945652,0.001178
+Without SelfLoopRule,14,0.8125,0.65,0.722222,0.945652,0.001171
+Without MissingNodeRule,14,0.8125,0.65,0.722222,0.945652,0.001209
+Without UnspawnedProcessRule,14,0.8125,0.65,0.722222,0.945652,0.001167
+Without SequenceGapRule,14,0.769231,0.5,0.606061,0.929348,0.001042
+Without TimestampRule,14,0.8125,0.65,0.722222,0.945652,0.00119
+Without ParentChildTemporalRule,14,0.8125,0.65,0.722222,0.945652,0.001091
+Without ProcessActivityTemporalRule,14,0.8125,0.65,0.722222,0.945652,0.00108
+Without SequenceMonotonicityRule,14,1.0,0.5,0.666667,0.945652,0.000978
+Without SpawnConsistencyRule,14,0.785714,0.55,0.647059,0.934783,0.001191
+Without ExecutionConsistencyRule,14,0.8125,0.65,0.722222,0.945652,0.001142
+Without ReadWriteConsistencyRule,14,0.785714,0.55,0.647059,0.934783,0.00105
+Without NetworkConsistencyRule,14,0.8,0.6,0.685714,0.940217,0.00113
+Without DeleteConsistencyRule,14,0.8125,0.65,0.722222,0.945652,0.001145

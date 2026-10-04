@@ -1,0 +1,52 @@
+{
+  "theia3": {
+    "nodes": 20157,
+    "edges": 297777,
+    "node_types": {
+      "file": 10528,
+      "network": 6174,
+      "process": 3455
+    },
+    "edge_types": {
+      "connect": 120888,
+      "read": 117892,
+      "write": 48877,
+      "delete": 6279,
+      "spawn": 2529,
+      "execute": 1312
+    },
+    "dup_edge_ids": 0,
+    "dup_node_ids": 0,
+    "null_ts": 0,
+    "ts_min": 1522942929.4232378,
+    "ts_max": 1522946509.664889,
+    "missing_endpoints": 0,
+    "missing_endpoints_t": 0,
+    "confirmed_label_columns": []
+  },
+  "theia5m": {
+    "nodes": 34835,
+    "edges": 464858,
+    "node_types": {
+      "file": 20012,
+      "process": 13916,
+      "network": 907
+    },
+    "edge_types": {
+      "connect": 234573,
+      "read": 143036,
+      "write": 64408,
+      "spawn": 13170,
+      "execute": 9660,
+      "delete": 11
+    },
+    "dup_edge_ids": 0,
+    "dup_node_ids": 0,
+    "null_ts": 0,
+    "ts_min": 1523278015.0047345,
+    "ts_max": 1523312112.0013523,
+    "missing_endpoints": 0,
+    "missing_endpoints_t": 0,
+    "confirmed_label_columns": []
+  }
+}

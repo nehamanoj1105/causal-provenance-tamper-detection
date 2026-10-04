@@ -1,0 +1,27 @@
+{
+  "captured_utc": "2026-10-02T15:23:26Z",
+  "repository": "https://github.com/nehamanoj1105/causal-provenance-tamper-detection",
+  "commit_sha": "d8b8617c4478846ace3b82dbd9fb819c8e2f6a64",
+  "commit_subject": "Update README.md",
+  "shallow_clone": true,
+  "os": "Linux 6.8.0-1055-gke x86_64",
+  "cpu": "AMD EPYC 9B14 (4 vCPU visible)",
+  "gpu": "none (CPU only; torch.cuda.is_available()=False)",
+  "ram_gb": 15,
+  "python": "3.13.15",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "scikit_learn": "1.9.1",
+  "pandas": "3.0.6",
+  "matplotlib": "3.11.2",
+  "networkx": "3.7",
+  "torch": "2.14.1+cpu",
+  "torch_geometric": "2.8.0.post1",
+  "psutil": "7.2.2",
+  "pytest_tests": {"passed": 98, "failed": 5, "failed_modules": ["tests/test_graph_loader.py"],
+                   "failure_cause": "data/parsed/*.csv absent (gitignored); environmental, not a code defect"},
+  "notes": [
+    "The uploaded Mid_review_PPT_Template.pptx was NOT found in the environment (Task B Phase 2 blocker).",
+    "audit/data/raw/theia/*.csv were re-derived by the repo's own parser from the real DARPA CDM .bin files."
+  ]
+}

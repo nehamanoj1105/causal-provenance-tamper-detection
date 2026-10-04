@@ -1,0 +1,20 @@
+{
+  "target_edges": 25000,
+  "rep": 4,
+  "seed": 1004,
+  "construction_sec": 0.49735021591186523,
+  "edges": 25000,
+  "nodes": 792,
+  "poisoning_sec": 2.5192928314208984,
+  "rule_engine_infer_sec": 1.0841946601867676,
+  "rule_engine_f1": 0.8387096774193549,
+  "rule_engine_roc_auc": 0.933285304516043,
+  "rule_engine_throughput_eps": 23058.589862168665,
+  "evaluation_sec": 0.0,
+  "graphsage_total_sec": 1.2440564632415771,
+  "graphsage_f1": 0.6666666666666666,
+  "graphsage_roc_auc": 0.90881195383897,
+  "peak_python_mb": 24.93123435974121,
+  "rss_delta_mb": -4.33203125,
+  "end_to_end_sec": 4.100837707519531
+}

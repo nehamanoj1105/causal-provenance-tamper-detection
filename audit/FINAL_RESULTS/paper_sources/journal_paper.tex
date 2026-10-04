@@ -1,0 +1,662 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{figures/}}
+
+\begin{document}
+
+\title{Causal Consistency as a Defense: Detecting and Auditing Provenance Graph Poisoning}
+
+\author{\IEEEauthorblockN{N.~Manoj}
+\IEEEauthorblockA{Independent Researcher\\
+Email: nehamanoj1105@users.noreply.github.com}}
+
+\maketitle
+
+\begin{abstract}
+Provenance-based intrusion detection consumes a stored graph and assumes it is
+authentic. We examine what happens when that assumption fails, and whether the
+causal invariants that a provenance graph must satisfy by construction are
+sufficient to reveal post-collection tampering without any training. We assemble
+fifteen deterministic rules over structural, temporal and semantic invariants
+into a rule engine and evaluate it against a GraphSAGE baseline on controlled
+synthetic poisoning and on real DARPA Transparent Computing Engagement~3 Theia
+provenance. Over ten seeds, the rule engine reaches F1 $0.805\pm0.063$ on
+synthetic poisoning, with a genuine continuous score giving ROC-AUC
+$0.953\pm0.031$, while a leakage-free GraphSAGE reaches F1 $0.322\pm0.194$; the
+paired difference is $+0.482$ (Wilcoxon $p=0.002$). The rule engine's accuracy is
+unchanged as invariant-preserving mimicry grows from none to heavy. On real
+Theia graphs with synthetic post-collection poisoning it reaches F1
+$0.835\pm0.046$ and $0.850\pm0.060$, where GraphSAGE is near chance. We give
+particularly close attention to evaluation design: the conventional protocol of
+training and thresholding a baseline on the same edges inflates GraphSAGE F1 by
+$0.342$ absolute, and a reported ROC-AUC of $1.000$ for the rule engine is not a
+computed value. We separate real from synthetic evaluation throughout and release
+the complete corrected protocol, per-seed results and verification scripts.
+\end{abstract}
+
+\begin{IEEEkeywords}
+provenance, intrusion detection, graph poisoning, causal consistency,
+GraphSAGE, evaluation methodology, reproducibility, DARPA Transparent Computing
+\end{IEEEkeywords}
+
+\section{Introduction}
+The provenance of a computer system is its causal history: which process read
+which file, which process spawned which child, which process opened which
+network connection. Captured faithfully, it is a directed graph rich enough to
+reconstruct an intrusion after the fact and, increasingly, to detect it as it
+happens. Systems such as Unicorn~\cite{han2020unicorn}, NoDoze~\cite{hasan2021nodoze},
+HOLMES~\cite{milajerdi2019holmes}, Poirot~\cite{peirce2021poirot},
+FLASH~\cite{chen2021flash} and MAGIC~\cite{li2021magnet} build on the assumption
+that the provenance graph is a trustworthy record.
+
+That assumption holds only up to the point where the graph stops being produced
+and starts being stored. Once events are serialized, shipped and indexed, the
+graph becomes data, and data can be edited by an adversary with access to the
+storage. Deleting the events that record a privilege escalation, inserting
+events that suggest a process behaved benignly, reordering events to break a
+causal chain, or re-attributing an action to an innocent actor are all plausible
+operations against a stored graph. A downstream detector then reasons over a
+fiction with no indication that anything is wrong.
+
+Our question is whether causal consistency is enough to catch this. The events
+in a provenance graph are not arbitrary; they must satisfy invariants that come
+from what the events mean. An execute edge must point at a file. A read edge
+must point at a file. A child process cannot be spawned before its parent
+exists. Event sequence numbers within a process must increase. A process that
+appears to act must at some point have been spawned. These invariants are cheap
+to check and require no training data, which raises the question of how far they
+take us against an adversary who edits the graph.
+
+We answer with an empirical study and, deliberately, a methodological one. We
+build a fifteen-rule engine from these invariants and compare it to GraphSAGE, a
+representative learned detector, on the same poisoned instances. The comparison
+favors the rule engine, but the more useful result is why: a learned baseline
+evaluated in the conventional way---fit on all edges, threshold chosen to
+maximize F1 on the scored labels---has most of its reported advantage supplied
+by that choice. When the split is made honest, the advantage largely disappears.
+Because this failure mode is easy to reproduce and easy to miss, we treat it as
+a first-class result rather than a footnote.
+
+\subsection{Contributions}
+\begin{itemize}
+\item A deterministic, training-free detector for post-collection provenance
+tampering, built from fifteen structural, temporal and semantic invariants
+(Section~\ref{sec:framework}).
+\item A rigorous evaluation protocol with disjoint train, validation and test
+edges, validation-only threshold selection, and test-set isolation from weights,
+threshold, hyperparameters and attack intensity (Section~\ref{sec:protocol}).
+\item A ten-seed comparison on synthetic poisoning and an evaluation on two real
+Theia scenarios with synthetic post-collection poisoning, with paired
+significance tests (Sections~\ref{sec:main}--\ref{sec:robust}).
+\item A genuine continuous anomaly score for the rule engine, replacing a
+reported ROC-AUC of $1.000$ that was a fallback constant rather than a
+computation; the computed value is $0.953\pm0.031$ (Section~\ref{sec:rocauaudit}).
+\item A leakage analysis quantifying a $0.342$ absolute F1 inflation for the
+conventional GraphSAGE protocol (Section~\ref{sec:integrity}).
+\item A complete release of protocols, raw per-seed results and verification
+scripts so that every number can be re-derived (Section~\ref{sec:repro}).
+\end{itemize}
+
+\section{Background and Related Work}
+\subsection{Provenance-based detection}
+Specification-based systems (SLEUTH~\cite{hossain2017sleuth},
+HOLMES~\cite{milajerdi2019holmes}, Poirot~\cite{peirce2021poirot}) encode expert
+knowledge of attack behavior and are precise but require continued maintenance
+and do not adapt to novel tactics. Statistical systems score the rarity of
+events or paths (NoDoze~\cite{hasan2021nodoze}, ProvDetector), and are prone to
+flagging unusual-but-benign activity. Learning-based systems learn
+representations of benign behavior: Unicorn~\cite{han2020unicorn} at coarse
+granularity, FLASH~\cite{chen2021flash} and MAGIC~\cite{li2021magnet} at finer
+granularity, with GNN backbones such as GraphSAGE~\cite{hamilton2017graphsage}
+and GAT.
+
+\subsection{Adversarial robustness of graph detectors}
+Graph-based detectors have been shown vulnerable to mimicry, in which an
+adversary interleaves benign activity with malicious activity so that local
+aggregation dilutes the anomaly signal~\cite{jiang2023mimicry}. Defenses have
+moved toward dynamic neighbor selection and reinforcement-learned aggregation.
+Our setting differs: the adversary is not trying to look benign \emph{inside} the
+graph, but to edit the graph itself. A detector that verifies invariants is
+therefore addressing a different question than a detector that classifies
+behavior.
+
+\subsection{Provenance integrity}
+The integrity problem for provenance has mostly been approached through
+capture-side mechanisms---trusted logging, tamper-evident storage, cryptographic
+chaining. Our work is complementary: given a graph whose custody is uncertain, we
+ask how much can be recovered from internal consistency alone, as a lightweight
+layer before any cryptographic mechanism is available.
+
+\section{Problem Formulation}
+Let $G=(V,E)$ be a provenance graph produced by a capture pipeline and then
+stored. We consider an adversary that modifies $E$ between capture and analysis.
+The analysis receives a graph $G'$ and must decide, for each edge, whether it
+witnesses tampering. Formally, we seek a detector $D:G'\rightarrow\{0,1\}^{|E'|}$
+and, ideally, a score $s:G'\rightarrow\mathbb{R}^{|E'|}$.
+
+The ground truth is the set of edges the adversary changed. This is well defined
+for insertion, reordering and forgery, because those operations leave a
+(modified) edge in $G'$. It is not well defined for deletion, because the
+deleted edge is, by construction, absent from $G'$; an edge-level detector
+cannot mark an edge that is not there. We therefore do not treat deleted edges
+as scored positives. Their detectability comes only from breaking a higher-level
+invariant elsewhere---a parent process left without a spawn record, a gap in a
+sequence---and we report deletion separately.
+
+\section{Threat Model}
+We assume the attacker can read and write the stored graph, but cannot modify
+the detector, disable the parser, or compromise the kernel that produced the
+records (Table~\ref{tab:threat}). The attacker may delete, insert, reorder and
+forge edges, and may edit node and edge attributes. The attacker is gray-box:
+the schema and the general class of detector are known, but not detector
+parameters or learned weights. The goal is to hide malicious activity while
+preserving as much observable structure as possible. Timestamp manipulation,
+attribute forgery and targeted stealth poisoning are in scope as future attack
+classes but are not evaluated here.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Threat model summary.}
+\label{tab:threat}
+\begin{tabular}{p{3.0cm}p{5.0cm}}
+\toprule
+Aspect & Assumption \\
+\midrule
+Trusted & kernel, audit logging, parser, detector \\
+Untrusted & stored graph, intermediate representations, storage \\
+Attacker can & delete, insert, reorder, forge edges; edit attributes \\
+Attacker cannot & modify detector/parser, compromise kernel \\
+Knowledge & schema + detector class (gray-box) \\
+Goal & hide malicious activity, preserve structure \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Provenance Representation}
+A provenance graph $G=(V,E)$ has typed nodes and edges. Node types are process,
+file, user and network endpoint. Edge types are read, write, execute, connect,
+spawn and delete. Each edge carries source and target identifiers, a type and a
+timestamp; each event carries a sequence number within its owning process. This
+is the common data model of the DARPA Transparent Computing program, whose
+records are serialized in Avro; our parser decodes that schema into the
+representation above. The rules below are stated entirely in terms of these
+types, the identifiers and the timestamps, so they apply to any capture that
+produces this model.
+
+\section{Proposed Detection Framework}
+\label{sec:framework}
+The detector is a rule engine that evaluates fifteen invariants over the graph
+and returns, for each, the set of violations, each attributed to an edge or a
+node. We group the rules by the kind of invariant they check.
+
+\subsection{Structural rules}
+Well-formedness of types and topology: no duplicate edge tuples; no duplicate
+event identifiers; spawn edges must target process nodes; execute, read, write
+and delete edges must target file nodes; connect edges must target network
+endpoints; no self-referential edges; no edges referencing nodes that are not
+present; and no active process lacking a parent spawn edge.
+
+\subsection{Temporal rules}
+Ordering invariants: non-negative timestamps; a child's spawn must not precede
+its parent's spawn; process activity must not precede the process spawn; event
+sequence numbers must be contiguous enough to reveal gaps; and timestamps must
+be monotone within a process stream.
+
+\subsection{Semantic rules}
+Lineage invariants: a process that acts without any observed parent spawn is
+flagged, capturing attempted laundering of provenance through re-attribution.
+
+\subsection{Continuous anomaly score}
+For ranking and for AUC, every violation contributes a severity weight (high
+$3$, medium $2$, low $1$) to the edge it is attributed to, either directly by
+edge identifier or, for node-attributed violations, to the incident edges. The
+binary decision is score greater than zero. This score is a genuine, monotone
+ranking signal derived from the violation structure; we use it, and only it,
+when reporting ROC-AUC and PR-AUC. No AUC in this paper is produced by a
+fallback constant.
+
+\section{GraphSAGE Baseline}
+\label{sec:graphsage}
+The learned baseline is a two-layer GraphSAGE encoder~\cite{hamilton2017graphsage}
+with an edge classifier. Nodes are featurized by a one-hot node type and degree;
+edges by a one-hot edge type and a normalized timestamp. The baseline exists to
+test whether learning can exceed fixed invariants under a fair protocol. It is
+not tuned to win, its feature set is deliberately minimal, and Section
+\ref{sec:integrity} shows that its apparent strength in the original repository
+came largely from the evaluation protocol rather than from the model.
+
+\section{Experimental Methodology}
+\label{sec:protocol}
+\subsection{Datasets}
+\label{sec:datasets}
+Two data sources are used. The first is a synthetic provenance generator
+producing a graph of thirty processes, forty files and ten network entities,
+which provides exact ground truth and allows the attack intensity to be varied
+at will. The second is real provenance from DARPA Transparent Computing
+Engagement~3, the Theia streams~\cite{darpa2020tc}. Four benchmark scenarios are
+named in the original material (1r, 3, 5m, 6r). Two were obtained and parsed:
+scenario~3 with 20{,}157 nodes and 297{,}777 edges, and scenario~5m with 34{,}835
+nodes and 464{,}858 edges. Both parse counts match the documented statistics
+exactly. Scenarios~1r and~6r could not be downloaded, because the public mirror
+enforced a download quota (HTTP~403); we report the two obtained scenarios and
+state the missing coverage as a limitation rather than estimating it
+(Table~\ref{tab:datasets}).
+
+Real-data experiments are run on the first 50{,}000 edges of each real graph,
+matching the loader's behavior; the truncation is explicit. We emphasize the
+category separation used throughout: the real-data experiments are \emph{real
+provenance with synthetic post-collection poisoning}. They are not real attack
+labels, and we never describe them as detection of naturally occurring attacks.
+
+\subsection{Poisoning operators}
+\label{sec:poisoning}
+For each seed we inject five deletions, five insertions, five reorderings and
+five dependency forgeries, for twenty events. The injector operates on a deep
+copy of the clean graph, records for each event its original state, its modified
+state, an expected detection target and a flag indicating whether the operation
+actually changed the graph. It then asserts that the clean graph is unmodified.
+This matters because a naive implementation can mutate its input in place, and
+because some reorderings can be no-ops if they do not change the semantic order;
+we mark such events ineffective and exclude them from detectable positives.
+
+Twenty events yield fifteen scored positives, since the five deletions leave no
+final-graph edge. Detection metrics are computed over the final graph
+(\emph{final-graph universe}). An alternative convention, which adds the
+identifiers of deleted edges to the scoring universe, raises F1 from $0.805$ to
+$0.845$; this is quantified in Section~\ref{sec:poisongt} and we use the
+final-graph universe in all reported results.
+
+\subsection{Leakage-free protocol}
+\label{sec:leakprotocol}
+For the learned baseline, edges are partitioned into disjoint training,
+validation and test sets. Weights are fit on the training edges only; the
+decision threshold is selected on the validation edges only; and every reported
+metric is computed on the untouched test edges. Message passing for test-node
+features uses training and validation edges only, so test edges influence
+neither model weights nor threshold. Neither hyperparameters nor attack
+intensity is tuned on the test set. For the training-free rule engine there is
+no split to leak, which is precisely why the leakage below affects only the
+baseline.
+
+\subsection{Metrics}
+We report precision, recall, F1, accuracy, balanced accuracy, MCC, FPR, FNR,
+specificity, ROC-AUC and PR-AUC. ROC-AUC and PR-AUC are reported only where a
+genuine continuous score exists and both classes are present. For the rule
+engine this is the severity-weighted score of Section~\ref{sec:framework}; for
+GraphSAGE it is the classifier probability.
+
+\subsection{Seeds and statistics}
+Synthetic, mimicry, ablation and real-Theia experiments use ten seeds
+($1,7,13,21,42,99,123,256,512,1024$); generalization uses five
+($1,7,13,21,42$). Each seed produces a freshly generated graph and a fresh set
+of attack instances. We report the mean, sample standard deviation, median,
+minimum, maximum and a 95\% confidence interval (Student-$t$, $n-1$ degrees of
+freedom). Paired comparisons between detectors use the Wilcoxon signed-rank test
+on the same test instances, with Cohen's $d_z$ as an effect size.
+
+\section{Data Parsing and Preprocessing}
+Raw Theia records are Avro-serialized common data model entries nested under a
+datum envelope. The parser walks each record, extracts the typed subject and
+predicate, and emits an edge with source, target, type and timestamp. Nodes are
+materialized on demand from identifiers. Parsing the two obtained scenarios
+yields zero skipped records, and the counts agree with the published statistics,
+which is our validation that the decode is correct. No attack labels are read
+from the real data; the DARPA ground-truth report was obtained for context only
+and is not used as a detection target.
+
+\section{Evaluation Protocol}
+\label{sec:evaluation}
+Detection is evaluated at the edge level against the injected ground truth,
+under the final-graph universe. For the rule engine, the binary decision is
+score greater than zero and the continuous score is used for AUC. For GraphSAGE
+the protocol is the leakage-free one of Section~\ref{sec:leakprotocol}. Real and
+synthetic evaluations are never pooled: Table~\ref{tab:main} is synthetic,
+Table~\ref{tab:realpoison} is real-provenance-with-synthetic-poisoning, and the
+two are reported and discussed separately.
+
+\section{Main Detection Results}
+\label{sec:main}
+Table~\ref{tab:main} reports the ten-seed synthetic comparison. The rule engine
+reaches F1 $0.805\pm0.063$, with precision $0.715\pm0.095$, recall
+$0.933\pm0.063$ and specificity $0.964\pm0.017$; MCC is $0.795\pm0.064$. The
+leakage-free GraphSAGE reaches F1 $0.322\pm0.194$, precision $0.342\pm0.309$ and
+recall $0.502\pm0.364$. The learned baseline is not competitive once evaluated
+honestly, and its seed-to-seed variance is roughly three times larger. Under a
+paired test over the same instances, the F1 difference is $+0.482$ with a 95\%
+confidence interval of $[0.328, 0.636]$, Cohen's $d_z=2.24$ and a Wilcoxon
+$p=0.002$; the ROC-AUC difference ($+0.124$, $p=0.105$) is not statistically
+distinguished at this sample size (Table~\ref{tab:significance}). We report that
+non-result rather than claiming a uniform advantage.
+
+Figure~\ref{fig:main} shows the per-metric comparison. The rule engine's high
+recall and specificity are the expected signature of a detector that checks
+invariants: it catches almost all injected structure while rarely flagging
+untouched edges. Its precision is the lower of the two headline numbers, because
+several rules attribute a violation to a node's incident edges, which widens the
+flagged set.
+
+\section{Cross-Dataset Generalization}
+\label{sec:generalization}
+Because the rule engine has no fitted parameters, it can be applied to a new
+graph unchanged. Applied to a real Theia graph after being defined on synthetic
+data, it reaches F1 $0.857\pm0.029$; moving between the two real scenarios it
+reaches $0.837\pm0.021$ (Table~\ref{tab:generalization}). This is a meaningful
+property for a defense layer: it can be deployed on a new capture without a
+labeled corpus. We deliberately make no corresponding claim for GraphSAGE. A
+genuine transfer across a shared feature space is not implemented in this study,
+so the GraphSAGE column in Table~\ref{tab:generalization} is a target-trained
+model, and we label it as such rather than presenting it as generalization.
+
+\section{Robustness to Mimicry}
+\label{sec:robust}
+Mimicry is an adversary's attempt to hide tampering inside plausible noise. We
+generate camouflage edges that preserve the degree, type and timestamp
+distributions of the surrounding graph and that satisfy every implemented
+invariant, and increase their number from none to heavy (Table~\ref{tab:mimicry},
+Figure~\ref{fig:mimicry}). The rule engine's F1 is $0.805$ at every strength,
+unchanged to four decimal places, because camouflage that satisfies the
+invariants is, by definition, indistinguishable from benign behavior under a
+consistency check. GraphSAGE ranges from F1 $0.304$ to $0.542$ across strengths
+and remains well below the rule engine.
+
+Two specification details are essential to interpret this correctly. First, the
+noise is constructed to be genuinely consistent: across all seeds and strengths
+it introduces zero rule self-violations. If instead the camouflage is generated
+so that it violates the invariants it is meant to evade---for instance with
+inconsistent edge types or timestamps---the rule engine flags the noise, and any
+apparent precision collapse is an artifact of the generator, not a property of
+mimicry. Second, we distinguish observable noise violations from latent
+identifiers: an implementation must not tag camouflage edges with an attribute
+that a feature-based detector could trivially read. We verify that no detector
+in this study consumes such an attribute.
+
+\section{Poisoning Experiments and Ground-Truth Validity}
+\label{sec:poisongt}
+Table~\ref{tab:realpoison} reports the real-provenance experiments. On scenario~3
+the rule engine reaches F1 $0.835\pm0.046$ and on scenario~5m F1
+$0.850\pm0.060$; GraphSAGE reaches F1 $0.034\pm0.105$ and $0.010\pm0.009$. The
+rule engine also retains a very low false-positive rate on the unmodified real
+graphs, flagging $19$ of $50{,}000$ edges in scenario~3 and $7$ of $50{,}000$ in
+scenario~5m (below $0.04\%$).
+
+The ground-truth audit is worth stating explicitly. Of twenty injected events per
+seed, fifteen are detectable positives: the five deletions vanish and cannot be
+edge-matched. The remaining operations are real modifications of final-graph
+edges. Under the alternative scoring universe that adds the absent deleted-edge
+identifiers, aggregate F1 rises from $0.805$ to $0.845$; the entire gap is the
+credit granted to deleted-edge identifiers that no longer exist. We do not grant
+it, and we report the deletion rate as a limitation rather than folding it into
+the edge-level metrics.
+
+\section{Rule Ablation}
+\label{sec:ablation}
+Table~\ref{tab:ablation} reports rule-group removal and leave-one-rule-out over
+ten seeds. The structural group carries the detector: removing it drops F1 from
+$0.805$ to $0.328$. Removing the temporal group costs little ($0.798$), and
+leave-one-rule-out identifies the read/write, network and spawn consistency rules
+as individually load-bearing: removing read/write alone drops F1 to $0.517$,
+removing spawn to $0.742$, removing network to $0.746$. Two rules,
+unspawned-process and timestamp validity, are inert on synthetic data: removing
+either leaves F1 unchanged at $0.805$. We report this rather than presenting all
+fifteen rules as equally necessary. Their value is expected on real logs with
+non-sequential identifiers, where a gap in the sequence is informative; this is
+future work, not a current claim.
+
+\section{GraphSAGE Leakage Analysis and Evaluation Integrity}
+\label{sec:integrity}
+The most consequential finding of this study is about evaluation, not modeling.
+The conventional protocol for the learned baseline trains on all edges and then
+selects the decision threshold that maximizes F1 on the same labels it reports.
+On the identical seed, this protocol yields GraphSAGE F1 $0.588$, while the
+leakage-free protocol yields $0.246$ (Figure~\ref{fig:leakage}). The difference,
+$0.342$ absolute, is not model quality; it is the threshold being chosen with
+knowledge of the test answers.
+
+Three specific leakage channels are present in such a protocol and absent from
+ours. First, training edges are also test edges, so the model sees the instances
+it is scored on. Second, the threshold is optimized on the scored set, which
+directly maximizes the reported metric. Third, message passing over the full
+graph lets test edges influence the features used for test nodes. Removing all
+three is what separates the two numbers above. Because the rule engine has no
+fitted parameters and no threshold search, it is invariant to this class of
+error, which is a practical advantage of a training-free detector beyond
+accuracy.
+
+We also audit a reported ROC-AUC of $1.000$ for the rule engine. It is not a
+computed quantity: the evaluation record for the rule engine contains no ROC-AUC,
+and the reported value is a fallback constant applied when the field is missing.
+Such a value is meaningless and we do not use it. The genuine AUC, computed from
+the severity-weighted score of Section~\ref{sec:framework}, is
+$0.953\pm0.031$ ($\text{PR-AUC}=0.740\pm0.080$), reported in
+Table~\ref{tab:main} and shown for a representative seed in
+Figure~\ref{fig:rocpr}.
+
+\section{ROC-AUC Verification and Continuous Scoring}
+\label{sec:rocauaudit}
+We verify the AUC claim independently. The rule engine emits binary violations;
+to obtain a ranking score we aggregate violations per edge with severity weights
+and treat the resulting non-negative score as a ranking signal. This produces a
+genuine ROC curve and a genuine precision--recall curve
+(Figure~\ref{fig:rocpr}), with edge-level AUC computed by the standard estimator.
+The value is $0.953$ on the seed shown and $0.953\pm0.031$ across ten seeds, i.e.
+strong but not perfect. We report PR-AUC (average precision) alongside, since the
+positive class is a small minority and average precision is the more informative
+summary under imbalance. We do not report an AUC for the rule engine anywhere
+that a legitimate continuous score is not computed.
+
+\section{Scalability and Computational Cost}
+\label{sec:scalability}
+Table~\ref{tab:scalability} and Figure~\ref{fig:scalability} report runtime,
+memory and throughput from ten thousand to one million edges, five repetitions
+per size. We time construction, poisoning, rule-engine inference and end-to-end
+execution separately, and we report GraphSAGE training and inference separately
+from rule-engine inference, because comparing a training cost to an inference
+cost is not meaningful.
+
+Construction and inference are both linear in the edge count. Inference takes
+$0.37$~s at ten thousand edges and $34.5$~s at one million; construction takes
+$0.18$~s and $21.2$~s. Peak Python allocation grows from about $37$~MB to
+$971$~MB, close to one kilobyte per edge, and throughput is stable near
+$2.9\times10^{4}$ edges per second across the full range. The flat throughput is
+the expected result of a single linear pass over the events and indicates no
+super-linear behavior hiding in the rule set. Poisoning is the dominant cost,
+roughly sixty percent of end-to-end, because the corrected injector deep-copies
+the graph and checks integrity on every event.
+
+\section{Statistical Analysis}
+\label{sec:statistics}
+Table~\ref{tab:significance} reports the paired analysis. For F1, the mean paired
+difference is $+0.482$ with a 95\% confidence interval of $[0.328, 0.636]$,
+Cohen's $d_z=2.24$ and Wilcoxon $p=0.002$ ($n=10$), a large and statistically
+supported effect. For ROC-AUC the mean difference is $+0.124$ with an interval of
+$[0.005, 0.242]$ and $p=0.105$: at this sample size the AUC difference is not
+distinguished from zero, and we say so rather than reporting only the significant
+metric. All tests use paired observations on identical test instances, so the
+comparison does not depend on separately drawn evaluation sets.
+
+\section{Discussion}
+The results support a specific, bounded claim: post-collection tampering that
+breaks a provenance graph's internal causal invariants is detectable, in a
+training-free way, on both synthetic and real graph structure, with linear cost
+and strong robustness to invariant-preserving noise. The results also support a
+methodological claim that is easy to overlook: a learned baseline can appear far
+stronger than it is when its threshold is chosen on the evaluation labels, and
+removing that leak can reverse a comparison. Both claims are useful to the
+community---the first for defense, the second for how defense papers are
+evaluated.
+
+They also mark the boundary of the contribution. The rules check
+well-formedness, not intent: an adversary who edits the graph while preserving
+all invariants is not caught by this layer, and no statistical detector would
+catch a modification that makes the graph \emph{more} consistent. The rule engine
+is best understood as a cheap, deterministic, auditable first pass that a
+heavier detector or a cryptographic integrity mechanism can build on.
+
+\section{Limitations}
+The evaluation covers two of four Theia scenarios; scenarios 1r and 6r were
+unavailable and no results are estimated for them. All DARPA evaluations use
+synthetic post-collection poisoning rather than real attacks, so they measure
+detection of injected tampering on real graph structure, not detection of real
+intrusions. Deletion is only partially detectable: a deleted edge cannot be
+scored by edge matching, so we exclude it and do not claim a deletion detection
+rate. Real graphs are truncated to their first 50{,}000 edges. The GraphSAGE
+feature set is minimal and no shared-feature cross-graph transfer is
+implemented, so the generalization study covers the rule engine only. Finally,
+the class balance on real graphs is extreme (fifteen positives in fifty thousand
+edges), so precision there is sensitive to a handful of false positives.
+
+\section{Reproducibility}
+\label{sec:repro}
+We release the corrected protocol, the poisoning and mimicry generators, the
+leakage-free harness, the raw per-seed result files, the aggregation scripts,
+and the verification scripts. Every headline number is re-derived from the raw
+per-seed files by an independent checker; the check recomputes each metric from
+its confusion matrix (1{,}890 metric recomputations, zero mismatches) and
+cross-checks 226 headline values against the tables (zero discrepancies). The
+pipeline is deterministic: re-running seeds 1, 42 and 1024 in memory reproduces
+the stored raw files exactly. The repository's original results are preserved
+unmodified, and every deviation between the original protocol and the corrected
+one is documented with its cause. Table~\ref{tab:repro} summarizes the release
+contents.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Reproducibility artifacts.}
+\label{tab:repro}
+\begin{tabular}{p{3.0cm}p{4.7cm}}
+\toprule
+Artifact & Contents \\
+\midrule
+Raw results & per-seed JSON for every experiment \\
+Aggregation & scripts that build all tables from raw results \\
+Validation & independent recomputation + cross-check scripts \\
+Protocols & poisoning, mimicry, leakage-free harness \\
+Manifests & dataset provenance, checksums, parser \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+We asked whether the causal invariants of a provenance graph are enough to reveal
+post-collection poisoning, and found that a small deterministic rule set exploits
+them effectively. Over ten seeds on controlled poisoning the rule engine
+outperforms a leakage-free GraphSAGE by $0.482$ F1 with a large paired effect,
+its accuracy is unchanged under invariant-preserving mimicry, and it scales
+linearly to one million edges. On real Theia provenance with synthetic
+post-collection poisoning it reaches F1 $0.83$--$0.85$ where GraphSAGE is near
+chance. The study also shows that the size of a learned baseline's reported
+advantage can be an artifact of selecting its threshold on the evaluation labels,
+and that removing this leak removes most of the advantage. We release everything
+needed to re-derive every number, including a documented account of the original
+protocol's defects and the corrected evaluation that replaces them.
+
+\input{tables/table3_main_detection}
+\input{tables/table9_real_data_poisoning}
+\input{tables/table6_mimicry}
+\input{tables/table7_rule_ablation}
+\input{tables/table5_cross_dataset}
+\input{tables/table8_scalability}
+\input{tables/table4_statistical_comparison}
+\input{tables/table1_dataset_statistics}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{fig_main_performance.pdf}
+\caption{Synthetic controlled poisoning, ten seeds: Rule Engine versus
+leakage-free GraphSAGE (mean and 95\% CI).}
+\label{fig:main}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{fig_roc_pr.pdf}
+\caption{Rule Engine ROC and precision--recall curves from a genuine continuous
+anomaly score (synthetic seed 42).}
+\label{fig:rocpr}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\columnwidth]{fig_leakage.pdf}
+\caption{Effect of evaluation leakage on GraphSAGE F1 for the same seed.}
+\label{fig:leakage}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{fig_mimicry.pdf}
+\caption{Robustness to invariant-preserving mimicry (ten seeds).}
+\label{fig:mimicry}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{fig_ablation.pdf}
+\caption{Rule ablation and leave-one-rule-out (ten seeds).}
+\label{fig:ablation}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{fig_scalability.pdf}
+\caption{Scalability, five repetitions per size.}
+\label{fig:scalability}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{fig_generalization.pdf}
+\caption{Cross-dataset generalization (five seeds). The GraphSAGE column is
+target-trained; no shared-feature transfer is implemented.}
+\label{fig:generalization}
+\end{figure}
+
+\begin{thebibliography}{99}
+\bibitem{han2020unicorn} X.~Han, T.~Pasquier, A.~Bates, J.~Mickens, and
+M.~Seltzer, ``Unicorn: Runtime provenance-based detector for advanced
+persistent threats,'' in \emph{NDSS}, 2020.
+\bibitem{hsieh2018kobold} K.~Hsieh \emph{et al.}, ``Kobold: Evaluating
+decentralized access control,'' in \emph{IEEE S\&P Workshops}, 2018.
+\bibitem{jiang2023mimicry} P.~Jiang \emph{et al.}, ``Mimicry attacks against
+provenance graph based intrusion detection systems,'' in \emph{NDSS}, 2023.
+\bibitem{wang2020you} Q.~Wang \emph{et al.}, ``You are what you do: Hunting
+stealthy malware via data provenance analysis,'' in \emph{NDSS}, 2020.
+\bibitem{li2021magnet} Z.~Jia, Y.~Xiong, Y.~Nan, Y.~Zhang, J.~Zhao, and
+M.~Wen, ``MAGIC: Detecting advanced persistent threats via masked graph
+representation learning,'' in \emph{USENIX Security}, 2024.
+\bibitem{chen2021flash} M.~A.~Rehman and S.~Ahmadi, ``FLASH: A comprehensive
+approach to intrusion detection via provenance graph representation learning,''
+in \emph{IEEE S\&P}, 2022.
+\bibitem{king2003backtracking} S.~T.~King and P.~M.~Chen, ``Backtracking
+intrusions,'' in \emph{ACM SOSP}, 2003.
+\bibitem{hossain2017sleuth} M.~N.~Hossain \emph{et al.}, ``SLEUTH: Real-time
+attack scenario reconstruction from COTS audit data,'' in \emph{USENIX
+Security}, 2017.
+\bibitem{milajerdi2019holmes} S.~M.~Milajerdi, R.~Gjomemo, B.~Eshete,
+R.~Sekar, and V.~N.~Venkatakrishnan, ``HOLMES: Real-time APT detection through
+correlation of suspicious information flows,'' in \emph{IEEE S\&P}, 2019.
+\bibitem{peirce2021poirot} S.~M.~Milajerdi, B.~Eshete, R.~Gjomemo, and
+V.~N.~Venkatakrishnan, ``Poirot: Aligning attack behavior with kernel audit
+records for cyber threat hunting,'' in \emph{ACM CCS}, 2019.
+\bibitem{hasan2021nodoze} W.~U.~Hassan, M.~A.~Noureddine, P.~Datta, and
+A.~Bates, ``NoDoze: Combatting threat alert fatigue with automated provenance
+triage,'' in \emph{NDSS}, 2019.
+\bibitem{hamilton2017graphsage} W.~L.~Hamilton, R.~Ying, and J.~Leskovec,
+``Inductive representation learning on large graphs,'' in \emph{NeurIPS}, 2017.
+\bibitem{darpa2020tc} DARPA I2O, ``Transparent Computing Engagement 3 data
+release,'' 2020. [Online]. Available:
+\url{https://github.com/darpa-i2o/Transparent-Computing}
+\bibitem{pasquier2018practical} T.~Pasquier \emph{et al.}, ``Practical
+whole-system provenance capture,'' in \emph{ACM SoCC}, 2017.
+\end{thebibliography}
+
+\end{document}

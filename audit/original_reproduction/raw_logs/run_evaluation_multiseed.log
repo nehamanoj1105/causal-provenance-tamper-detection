@@ -1,0 +1,21 @@
+[*] Starting Phase 6 Evaluation (dataset='synthetic', attacks=['all'], seeds=[1, 7, 13, 21, 42, 99, 123, 256, 512, 1024])...
+[*] Generating Phase 6 evaluation reports under 'results/'...
+
+============================================================
+SEED STATISTICS SUMMARY (Mean ± Std)
+============================================================
+  all                            | Precision: 0.8039 ± 0.0696 | Recall: 0.7900 ± 0.1022 | F1: 0.7921 ± 0.0578
+
+REPORTS GENERATED:
+  [ATTACK_BREAKDOWN_CSV] results/attack_breakdown.csv
+  [ATTACK_BREAKDOWN_MD] results/attack_breakdown.md
+  [RUNTIME_CSV] results/runtime.csv
+  [RUNTIME_MD] results/runtime.md
+  [SEED_STATISTICS_CSV] results/seed_statistics.csv
+  [SEED_STATISTICS_MD] results/seed_statistics.md
+  [OVERALL_SUMMARY_MD] results/overall_summary.md
+  [EVALUATION_CSV] results/evaluation.csv
+  [EVALUATION_JSON] results/evaluation.json
+  [SUMMARY_MD] results/summary.md
+
+[+] Phase 6 evaluation completed successfully.

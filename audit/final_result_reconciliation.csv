@@ -1,0 +1,17 @@
+experiment,paper_value,original_reproduction,audited_value,difference,relative_difference,reproducible,methodology_issue,notes
+"Synthetic RE Precision (seed 42, committed)",0.8125,0.8125,0.7146,-0.09789999999999999,-0.12049230769230768,yes,none,single-seed committed value repro at its own protocol; seed-42 corrected RE precision=0.7146
+"Synthetic RE Recall (seed 42, committed)",0.65,0.65,0.9329,0.28289999999999993,0.4352307692307691,yes,none,seed-42 corrected
+"Synthetic RE F1 (seed 42, committed)",0.7222222222222222,0.7222222222222222,0.8485,0.12627777777777782,0.1748461538461539,yes,none,seed-42 corrected (different GT definition: detectable vs all)
+Synthetic RE multi-seed F1 mean (committed as 0.7222+-0.0),0.7222,0.7921,0.8048056201634507,0.08260562016345074,0.11438053193499134,no,committed '10-seed' stat is a single seed with std 0,reproduced committed protocol mean=0.7921; corrected protocol mean=0.8048
+Synthetic GraphSAGE F1 (committed 0.5600),0.56,0.56,0.322436974789916,-0.23756302521008404,-0.42421968787515,no,committed value from train-on-test + threshold-on-test protocol,leakage-free protocol mean=0.3224
+Mimicry none RE F1 (committed),,,0.8048056201634507,,,no,committed values drop with noise because camouflage injected invariant-violating edges,corrected benign camouflage: mean=0.8048 std=0.0627
+Mimicry light RE F1 (committed),,,0.8048056201634507,,,no,committed values drop with noise because camouflage injected invariant-violating edges,corrected benign camouflage: mean=0.8048 std=0.0627
+Mimicry medium RE F1 (committed),,,0.8048056201634507,,,no,committed values drop with noise because camouflage injected invariant-violating edges,corrected benign camouflage: mean=0.8048 std=0.0627
+Mimicry heavy RE F1 (committed),,,0.8048056201634507,,,no,committed values drop with noise because camouflage injected invariant-violating edges,corrected benign camouflage: mean=0.8048 std=0.0627
+Rule Engine ROC-AUC under mimicry (paper 1.0000),1.0,1.0,0.9528455284552846,-0.047154471544715415,-0.047154471544715415,no,"committed 1.0 is a hard-coded fallback, not a computed AUC",independently computed continuous-score ROC-AUC mean=0.9528 std=0.0312 (range 0.8854-0.9919)
+DARPA theia3 synthetic_post_collection_rule_engine F1,,,0.8347438002610417,,,no,committed DARPA tables derive from synthetic fallback when data absent,real Theia edges=50000 truncated=True; synthetic post-collection poisoning only
+DARPA theia3 synthetic_post_collection_graphsage F1,,,0.03395927596881325,,,no,committed DARPA tables derive from synthetic fallback when data absent,real Theia edges=50000 truncated=True; synthetic post-collection poisoning only
+DARPA theia5m synthetic_post_collection_rule_engine F1,,,0.8503707403707403,,,no,committed DARPA tables derive from synthetic fallback when data absent,real Theia edges=50000 truncated=True; synthetic post-collection poisoning only
+DARPA theia5m synthetic_post_collection_graphsage F1,,,0.009855111005265805,,,no,committed DARPA tables derive from synthetic fallback when data absent,real Theia edges=50000 truncated=True; synthetic post-collection poisoning only
+Paired RE-GS f1 difference,,,0.48236864537353474,,,n/a,no paper paired test reported,Wilcoxon p=0.001953125
+Paired RE-GS roc_auc difference,,,0.12391939739680055,,,n/a,no paper paired test reported,Wilcoxon p=0.10546875

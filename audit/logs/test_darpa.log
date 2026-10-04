@@ -1,0 +1,13 @@
+nohup: ignoring input
+/home/openhands/.local/lib/python3.13/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+  theia3 seed 1: RE f1 0.8571
+  theia3 seed 7: RE f1 0.8571
+  theia3 seed 13: RE f1 0.8148
+  theia3 seed 21: RE f1 0.8571
+  theia3 seed 42: RE f1 0.8966
+  theia3 seed 99: RE f1 0.8148
+  theia3 seed 123: RE f1 0.3729
+  theia3 seed 256: RE f1 0.8571
+  theia3 seed 512: RE f1 0.8148
+  theia3 seed 1024: RE f1 0.8966

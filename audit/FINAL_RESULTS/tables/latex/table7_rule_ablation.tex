@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\small
+\caption{Rule-group and leave-one-rule-out ablation (10 seeds).}
+\label{tab:ablation}
+\begin{tabular}{lccc}
+\toprule
+Variant & F1 mean & F1 std & 95\% CI \\
+\midrule
+All rules & 0.8048 & 0.0627 & [0.760, 0.850] \\
+w/o structural & 0.3285 & 0.0731 & [0.276, 0.381] \\
+w/o temporal & 0.7983 & 0.0055 & [0.794, 0.802] \\
+w/o semantic & 0.8048 & 0.0627 & [0.760, 0.850] \\
+$-$ReadWrite & 0.5173 & 0.1136 & [0.436, 0.599] \\
+$-$Network & 0.7455 & 0.0844 & [0.685, 0.806] \\
+$-$Spawn & 0.7417 & 0.0903 & [0.677, 0.806] \\
+$-$SeqMono & 0.7802 & 0.0863 & [0.719, 0.842] \\
+$-$Unspawned & 0.8048 & 0.0627 & [0.760, 0.850] \\
+\bottomrule
+\end{tabular}
+\end{table*}
