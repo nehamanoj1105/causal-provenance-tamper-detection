@@ -1,7 +1,0 @@
-figure,description,dataset,source,exists_in_audit_plots,status
-rule_engine_roc_pr_seed42.png,Rule Engine ROC/PR (genuine continuous score),synthetic seed 42,AUC from raw_runs/synthetic/seed_42.json,True,OK
-scalability_corrected.png,Rule Engine scalability,synthetic 10k-1M,raw_runs/scalability/*,True,OK
-F1_vs_attack.png,F1 vs attack type (committed results/ figure),synthetic,"results/ (committed, single-seed)",True,STALE-SINGLE-SEED
-roc_curve.png,ROC curve (committed results/ figure),synthetic,results/ (committed; check source),True,REVIEW
-robustness_curve.png,Robustness/mimicry (committed),synthetic,results/ (committed; mis-specified mimicry),True,STALE-MIMICRY
-runtime_vs_edges.png,Runtime vs edges (committed),synthetic,results/ (committed),True,STALE-HW

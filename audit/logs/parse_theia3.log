@@ -1,8 +1,0 @@
-nohup: ignoring input
-Traceback (most recent call last):
-  File "/workspace/project/causal-provenance-tamper-detection/audit/scripts/parse_real.py", line 11, in <module>
-    from src.graph_construction.cdm_parser import parse_cdm_files_to_csv  # noqa: E402
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/project/causal-provenance-tamper-detection/src/graph_construction/cdm_parser.py", line 28, in <module>
-    from fastavro import reader as avro_reader
-ModuleNotFoundError: No module named 'fastavro'
